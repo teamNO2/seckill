@@ -12,6 +12,8 @@ import com.suixingpay.entity.Manager;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: 孙克强<sun_kq@suixingpay.com>
@@ -22,4 +24,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ManagerRepository {
     Manager selectById(String id);
+
+    /**
+     * @Description:根据城市和鑫管家ID判断鑫管家是否在本城市
+     * @Param: [City]
+     * @return: java.util.List<com.suixingpay.entity.Manager>
+     * @Author: lichanghao
+     * @Date: 2019/12/8
+     */
+    Manager selectManagerByCity(String City,int manageId);
 }

@@ -287,4 +287,12 @@
     </select>
 
 
+    <select id="selectManagerByCity" resultType="com.suixingpay.entity.Manager" >
+        select <include refid="Base_Column_List" />
+        from manage
+        where manageProvince = #{manageProvince} and manageId = #{manageId}
+    </select>
+
+
+
 </mapper>
