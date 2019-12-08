@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suixingpay.repository.SceneRepository" >
+
+    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Scene" >
+        <id column="scene_id" property="sceneId" jdbcType="INTEGER" />
+        <result column="scene_starttime" property="sceneStarttime" jdbcType="VARCHAR" />
+        <result column="scene_endtime" property="sceneEndtime" jdbcType="VARCHAR" />
+        <result column="scene_continurtime" property="sceneContinurtime" jdbcType="VARCHAR" />
+        <result column="scene_province" property="sceneProvince" jdbcType="VARCHAR" />
+        <result column="scene_count" property="sceneCount" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `scene_id`,`scene_starttime`,`scene_endtime`,`scene_continurtime`,`scene_province`,`scene_count`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `scene`
+        where `scene_id` = #{sceneId,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.suixingpay.entity.Scene" >
+        insert into `scene` (`scene_id`,`scene_starttime`,`scene_endtime`,`scene_continurtime`,`scene_province`,`scene_count`)
+        values (#{sceneId,jdbcType=INTEGER},#{sceneStarttime,jdbcType=VARCHAR},#{sceneEndtime,jdbcType=VARCHAR},#{sceneContinurtime,jdbcType=VARCHAR},#{sceneProvince,jdbcType=VARCHAR},#{sceneCount,jdbcType=INTEGER})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.suixingpay.entity.Scene" >
+        insert into `scene`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sceneId != null or sceneId == 0" >
+                `scene_id`,
+            </if>
+            <if test="sceneStarttime != null" >
+                `scene_starttime`,
+            </if>
+            <if test="sceneEndtime != null" >
+                `scene_endtime`,
+            </if>
+            <if test="sceneContinurtime != null" >
+                `scene_continurtime`,
+            </if>
+            <if test="sceneProvince != null" >
+                `scene_province`,
+            </if>
+            <if test="sceneCount != null or sceneCount == 0" >
+                `scene_count`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="sceneId != null or sceneId == 0" >
+                #{sceneId,jdbcType=INTEGER},
+            </if>
+            <if test="sceneStarttime != null" >
+                #{sceneStarttime,jdbcType=VARCHAR},
+            </if>
+            <if test="sceneEndtime != null" >
+                #{sceneEndtime,jdbcType=VARCHAR},
+            </if>
+            <if test="sceneContinurtime != null" >
+                #{sceneContinurtime,jdbcType=VARCHAR},
+            </if>
+            <if test="sceneProvince != null" >
+                #{sceneProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="sceneCount != null or sceneCount == 0" >
+                #{sceneCount,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Scene" >
+        update `scene`
+        <set >
+            <if test="sceneStarttime != null" >
+                `scene_starttime` = #{sceneStarttime,jdbcType=VARCHAR},
+            </if>
+            <if test="sceneEndtime != null" >
+                `scene_endtime` = #{sceneEndtime,jdbcType=VARCHAR},
+            </if>
+            <if test="sceneContinurtime != null" >
+                `scene_continurtime` = #{sceneContinurtime,jdbcType=VARCHAR},
+            </if>
+            <if test="sceneProvince != null" >
+                `scene_province` = #{sceneProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="sceneCount != null or sceneCount == 0" >
+                `scene_count` = #{sceneCount,jdbcType=INTEGER},
+            </if>
+        </set>
+        where `scene_id` = #{sceneId,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Scene" >
+        update `scene` set
+        `scene_starttime` = #{sceneStarttime,jdbcType=VARCHAR},
+        `scene_endtime` = #{sceneEndtime,jdbcType=VARCHAR},
+        `scene_continurtime` = #{sceneContinurtime,jdbcType=VARCHAR},
+        `scene_province` = #{sceneProvince,jdbcType=VARCHAR},
+        `scene_count` = #{sceneCount,jdbcType=INTEGER}
+        where `scene_id` = #{sceneId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `scene`
+        where `scene_id` = #{sceneId,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="sceneId != null or sceneId == 0" >
+                and `scene_id` = #{sceneId,jdbcType=INTEGER}
+            </if>
+            <if test="sceneStarttime != null" >
+                and `scene_starttime` = #{sceneStarttime,jdbcType=VARCHAR}
+            </if>
+            <if test="sceneEndtime != null" >
+                and `scene_endtime` = #{sceneEndtime,jdbcType=VARCHAR}
+            </if>
+            <if test="sceneContinurtime != null" >
+                and `scene_continurtime` = #{sceneContinurtime,jdbcType=VARCHAR}
+            </if>
+            <if test="sceneProvince != null" >
+                and `scene_province` = #{sceneProvince,jdbcType=VARCHAR}
+            </if>
+            <if test="sceneCount != null or sceneCount == 0" >
+                and `scene_count` = #{sceneCount,jdbcType=INTEGER}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "sceneId" and likes[k] != null'>
+                        and `scene_id` like concat('%', #{likes.sceneId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "sceneStarttime" and likes[k] != null'>
+                        and `scene_starttime` like concat('%', #{likes.sceneStarttime,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "sceneEndtime" and likes[k] != null'>
+                        and `scene_endtime` like concat('%', #{likes.sceneEndtime,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "sceneContinurtime" and likes[k] != null'>
+                        and `scene_continurtime` like concat('%', #{likes.sceneContinurtime,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "sceneProvince" and likes[k] != null'>
+                        and `scene_province` like concat('%', #{likes.sceneProvince,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "sceneCount" and likes[k] != null'>
+                        and `scene_count` like concat('%', #{likes.sceneCount,jdbcType=INTEGER}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "sceneId" and includes[k] != null'>
+                        and `scene_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "sceneStarttime" and includes[k] != null'>
+                        and `scene_starttime` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "sceneEndtime" and includes[k] != null'>
+                        and `scene_endtime` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "sceneContinurtime" and includes[k] != null'>
+                        and `scene_continurtime` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "sceneProvince" and includes[k] != null'>
+                        and `scene_province` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "sceneCount" and includes[k] != null'>
+                        and `scene_count` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="sceneId != null or sceneId == 0" >
+                and `scene_id` like concat('%', #{sceneId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="sceneStarttime != null" >
+                and `scene_starttime` like concat('%', #{sceneStarttime,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="sceneEndtime != null" >
+                and `scene_endtime` like concat('%', #{sceneEndtime,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="sceneContinurtime != null" >
+                and `scene_continurtime` like concat('%', #{sceneContinurtime,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="sceneProvince != null" >
+                and `scene_province` like concat('%', #{sceneProvince,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="sceneCount != null or sceneCount == 0" >
+                and `scene_count` like concat('%', #{sceneCount,jdbcType=INTEGER}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "sceneId"'>
+                    `scene_id`
+                </if>
+                <if test='k == "sceneStarttime"'>
+                    `scene_starttime`
+                </if>
+                <if test='k == "sceneEndtime"'>
+                    `scene_endtime`
+                </if>
+                <if test='k == "sceneContinurtime"'>
+                    `scene_continurtime`
+                </if>
+                <if test='k == "sceneProvince"'>
+                    `scene_province`
+                </if>
+                <if test='k == "sceneCount"'>
+                    `scene_count`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.suixingpay.entity.Scene" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `scene`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Scene" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `scene`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Scene" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `scene`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Scene" resultType="java.lang.Integer" >
+        select count(1)
+        from `scene`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Scene" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `scene`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Scene" resultType="java.lang.Integer" >
+        select count(1)
+        from `scene`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suixingpay.repository.DistributionRepository" >
+
+    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Distribution" >
+        <id column="dis_id" property="disId" jdbcType="INTEGER" />
+        <result column="dis_manageid" property="disManageid" jdbcType="INTEGER" />
+        <result column="dis_userid" property="disUserid" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `dis_id`,`dis_manageid`,`dis_userid`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `distribution`
+        where `dis_id` = #{disId,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.suixingpay.entity.Distribution" >
+        insert into `distribution` (`dis_id`,`dis_manageid`,`dis_userid`)
+        values (#{disId,jdbcType=INTEGER},#{disManageid,jdbcType=INTEGER},#{disUserid,jdbcType=INTEGER})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.suixingpay.entity.Distribution" >
+        insert into `distribution`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="disId != null or disId == 0" >
+                `dis_id`,
+            </if>
+            <if test="disManageid != null or disManageid == 0" >
+                `dis_manageid`,
+            </if>
+            <if test="disUserid != null or disUserid == 0" >
+                `dis_userid`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="disId != null or disId == 0" >
+                #{disId,jdbcType=INTEGER},
+            </if>
+            <if test="disManageid != null or disManageid == 0" >
+                #{disManageid,jdbcType=INTEGER},
+            </if>
+            <if test="disUserid != null or disUserid == 0" >
+                #{disUserid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Distribution" >
+        update `distribution`
+        <set >
+            <if test="disManageid != null or disManageid == 0" >
+                `dis_manageid` = #{disManageid,jdbcType=INTEGER},
+            </if>
+            <if test="disUserid != null or disUserid == 0" >
+                `dis_userid` = #{disUserid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where `dis_id` = #{disId,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Distribution" >
+        update `distribution` set
+        `dis_manageid` = #{disManageid,jdbcType=INTEGER},
+        `dis_userid` = #{disUserid,jdbcType=INTEGER}
+        where `dis_id` = #{disId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `distribution`
+        where `dis_id` = #{disId,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="disId != null or disId == 0" >
+                and `dis_id` = #{disId,jdbcType=INTEGER}
+            </if>
+            <if test="disManageid != null or disManageid == 0" >
+                and `dis_manageid` = #{disManageid,jdbcType=INTEGER}
+            </if>
+            <if test="disUserid != null or disUserid == 0" >
+                and `dis_userid` = #{disUserid,jdbcType=INTEGER}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "disId" and likes[k] != null'>
+                        and `dis_id` like concat('%', #{likes.disId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "disManageid" and likes[k] != null'>
+                        and `dis_manageid` like concat('%', #{likes.disManageid,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "disUserid" and likes[k] != null'>
+                        and `dis_userid` like concat('%', #{likes.disUserid,jdbcType=INTEGER}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "disId" and includes[k] != null'>
+                        and `dis_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "disManageid" and includes[k] != null'>
+                        and `dis_manageid` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "disUserid" and includes[k] != null'>
+                        and `dis_userid` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="disId != null or disId == 0" >
+                and `dis_id` like concat('%', #{disId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="disManageid != null or disManageid == 0" >
+                and `dis_manageid` like concat('%', #{disManageid,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="disUserid != null or disUserid == 0" >
+                and `dis_userid` like concat('%', #{disUserid,jdbcType=INTEGER}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "disId"'>
+                    `dis_id`
+                </if>
+                <if test='k == "disManageid"'>
+                    `dis_manageid`
+                </if>
+                <if test='k == "disUserid"'>
+                    `dis_userid`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.suixingpay.entity.Distribution" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `distribution`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Distribution" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `distribution`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Distribution" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `distribution`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Distribution" resultType="java.lang.Integer" >
+        select count(1)
+        from `distribution`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Distribution" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `distribution`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Distribution" resultType="java.lang.Integer" >
+        select count(1)
+        from `distribution`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suixingpay.repository.ManagerRepository" >
+
+    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Manager" >
+        <id column="manage_id" property="manageId" jdbcType="INTEGER" />
+        <result column="manage_name" property="manageName" jdbcType="VARCHAR" />
+        <result column="manage_password" property="managePassword" jdbcType="VARCHAR" />
+        <result column="manage_province" property="manageProvince" jdbcType="VARCHAR" />
+        <result column="manage_isgrab" property="manageIsgrab" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `manage_id`,`manage_name`,`manage_password`,`manage_province`,`manage_isgrab`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `manager`
+        where `manage_id` = #{manageId,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.suixingpay.entity.Manager" >
+        insert into `manager` (`manage_id`,`manage_name`,`manage_password`,`manage_province`,`manage_isgrab`)
+        values (#{manageId,jdbcType=INTEGER},#{manageName,jdbcType=VARCHAR},#{managePassword,jdbcType=VARCHAR},#{manageProvince,jdbcType=VARCHAR},#{manageIsgrab,jdbcType=INTEGER})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.suixingpay.entity.Manager" >
+        insert into `manager`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="manageId != null or manageId == 0" >
+                `manage_id`,
+            </if>
+            <if test="manageName != null" >
+                `manage_name`,
+            </if>
+            <if test="managePassword != null" >
+                `manage_password`,
+            </if>
+            <if test="manageProvince != null" >
+                `manage_province`,
+            </if>
+            <if test="manageIsgrab != null or manageIsgrab == 0" >
+                `manage_isgrab`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="manageId != null or manageId == 0" >
+                #{manageId,jdbcType=INTEGER},
+            </if>
+            <if test="manageName != null" >
+                #{manageName,jdbcType=VARCHAR},
+            </if>
+            <if test="managePassword != null" >
+                #{managePassword,jdbcType=VARCHAR},
+            </if>
+            <if test="manageProvince != null" >
+                #{manageProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="manageIsgrab != null or manageIsgrab == 0" >
+                #{manageIsgrab,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Manager" >
+        update `manager`
+        <set >
+            <if test="manageName != null" >
+                `manage_name` = #{manageName,jdbcType=VARCHAR},
+            </if>
+            <if test="managePassword != null" >
+                `manage_password` = #{managePassword,jdbcType=VARCHAR},
+            </if>
+            <if test="manageProvince != null" >
+                `manage_province` = #{manageProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="manageIsgrab != null or manageIsgrab == 0" >
+                `manage_isgrab` = #{manageIsgrab,jdbcType=INTEGER},
+            </if>
+        </set>
+        where `manage_id` = #{manageId,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Manager" >
+        update `manager` set
+        `manage_name` = #{manageName,jdbcType=VARCHAR},
+        `manage_password` = #{managePassword,jdbcType=VARCHAR},
+        `manage_province` = #{manageProvince,jdbcType=VARCHAR},
+        `manage_isgrab` = #{manageIsgrab,jdbcType=INTEGER}
+        where `manage_id` = #{manageId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `manager`
+        where `manage_id` = #{manageId,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="manageId != null or manageId == 0" >
+                and `manage_id` = #{manageId,jdbcType=INTEGER}
+            </if>
+            <if test="manageName != null" >
+                and `manage_name` = #{manageName,jdbcType=VARCHAR}
+            </if>
+            <if test="managePassword != null" >
+                and `manage_password` = #{managePassword,jdbcType=VARCHAR}
+            </if>
+            <if test="manageProvince != null" >
+                and `manage_province` = #{manageProvince,jdbcType=VARCHAR}
+            </if>
+            <if test="manageIsgrab != null or manageIsgrab == 0" >
+                and `manage_isgrab` = #{manageIsgrab,jdbcType=INTEGER}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "manageId" and likes[k] != null'>
+                        and `manage_id` like concat('%', #{likes.manageId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "manageName" and likes[k] != null'>
+                        and `manage_name` like concat('%', #{likes.manageName,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "managePassword" and likes[k] != null'>
+                        and `manage_password` like concat('%', #{likes.managePassword,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "manageProvince" and likes[k] != null'>
+                        and `manage_province` like concat('%', #{likes.manageProvince,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "manageIsgrab" and likes[k] != null'>
+                        and `manage_isgrab` like concat('%', #{likes.manageIsgrab,jdbcType=INTEGER}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "manageId" and includes[k] != null'>
+                        and `manage_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "manageName" and includes[k] != null'>
+                        and `manage_name` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "managePassword" and includes[k] != null'>
+                        and `manage_password` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "manageProvince" and includes[k] != null'>
+                        and `manage_province` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "manageIsgrab" and includes[k] != null'>
+                        and `manage_isgrab` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="manageId != null or manageId == 0" >
+                and `manage_id` like concat('%', #{manageId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="manageName != null" >
+                and `manage_name` like concat('%', #{manageName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="managePassword != null" >
+                and `manage_password` like concat('%', #{managePassword,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="manageProvince != null" >
+                and `manage_province` like concat('%', #{manageProvince,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="manageIsgrab != null or manageIsgrab == 0" >
+                and `manage_isgrab` like concat('%', #{manageIsgrab,jdbcType=INTEGER}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "manageId"'>
+                    `manage_id`
+                </if>
+                <if test='k == "manageName"'>
+                    `manage_name`
+                </if>
+                <if test='k == "managePassword"'>
+                    `manage_password`
+                </if>
+                <if test='k == "manageProvince"'>
+                    `manage_province`
+                </if>
+                <if test='k == "manageIsgrab"'>
+                    `manage_isgrab`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.suixingpay.entity.Manager" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `manager`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Manager" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `manager`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Manager" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `manager`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Manager" resultType="java.lang.Integer" >
+        select count(1)
+        from `manager`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Manager" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `manager`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Manager" resultType="java.lang.Integer" >
+        select count(1)
+        from `manager`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>
