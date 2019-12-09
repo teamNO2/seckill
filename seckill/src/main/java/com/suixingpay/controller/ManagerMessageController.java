@@ -22,10 +22,10 @@ public class ManagerMessageController {
     private ManagerMessageService managerMessageService;
 
     //查询鑫管家抢到的用户通知
-    @GetMapping("/searchAllUserInfo")
-    public Callable<GenericResponse> searchAllUserInfo(HttpServletRequest request){
-        Manager manager = (Manager) request.getSession().getAttribute(String.valueOf(request.getHeader("manage_id")));
-        Integer managerId = manager.getManageId();
+    @GetMapping("/searchAllUserInfo/{managerId}")
+    public Callable<GenericResponse> searchAllUserInfo(@PathVariable("managerId") Integer managerId){
+        //Manager manager = (Manager) request.getSession().getAttribute(String.valueOf(request.getHeader("manage_Id")));
+        //Integer managerId = manager.getManageId();
         List<Silentuser> allManager = managerMessageService.searchAllUserInfo(managerId);
         if (allManager != null) {
             return () -> GenericResponse.success("searchAllUserInfo666", "查询成功", allManager);
