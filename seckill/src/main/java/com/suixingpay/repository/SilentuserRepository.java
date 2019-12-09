@@ -8,35 +8,54 @@
  */
 package com.suixingpay.repository;
 
+import com.suixingpay.entity.Manager;
 import com.suixingpay.entity.Silentuser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * @description:
- * @author: 孙克强<sun_kq@suixingpay.com>
- * @date: 2019/12/08 14:49
- * @version: V1.0
- */
 @Mapper
 @Repository
 //沉默用户
 public interface SilentuserRepository {
     /**
      * 柴宇航
-     * 查询已被鑫管家抢到的沉默用户
+     * 查询出参加活动的沉默用户
+     */
+    List<Silentuser> selectSilentuser(String userProvince);
+
+    /**
+     * 柴宇航
+     * 查询出抢到沉默用户的鑫管家
+     */
+    List<Manager> selectManager(String manageProvince);
+    /**
+     * 柴宇航
+     * 根据user_id修改manag_id改成已被分配
      */
     Silentuser selectSilentuser();
+
+    int updateManagerId(int manageId,int userId);
+
+    /**
+     * 柴宇航
+     * 根据user_id修改沉默用户为轮空用户
+     */
+    int updateSilentuserIsbyebye(int userId);
+
+
     /**
      * 张佳鑫
-     * 查询鑫管家抢到的用户通知和沉默用户
+     * 查询鑫管家抢到的所有用户通知
      */
-    //查询鑫管家抢到的用户通知
     List<Silentuser> selectByManagerId(String managerId);
 
-    //查询抢到的沉默用户
+    /**
+     * 张佳鑫
+     * 查询鑫管家抢到的沉默用户详细
+     */
     Silentuser selectById(String userId);
+
 
 }
