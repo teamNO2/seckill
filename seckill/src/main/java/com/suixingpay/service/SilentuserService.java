@@ -17,7 +17,7 @@ public interface SilentuserService {
      * 柴宇航
      * 查询出抢到沉默用户的鑫管家
      */
-    List<Manager> selectManager();
+    List<Manager> selectManager(String manageProvince);
     /**
      * 柴宇航
      * 根据user_id修改manag_id改成已被分配

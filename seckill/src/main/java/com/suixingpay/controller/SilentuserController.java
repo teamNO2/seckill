@@ -30,7 +30,7 @@ public class SilentuserController {
     @ApiOperation(value = "分配沉默用户",notes = "通过鑫管家是否抢到沉默用户给予分配并修改未被鑫管家抢到的沉默用户改为轮空用户")
     public Callable<GenericResponse> distributionSilentuser(@PathVariable String userProvince) {
         List<Silentuser> silentusers = silentuserService.selectSilentuser(userProvince);
-        List<Manager> managers = silentuserService.selectManager();
+        List<Manager> managers = silentuserService.selectManager(userProvince);
         for(Silentuser s:silentusers){
             if(!managers.isEmpty()){
                 Manager manager = managers.get(managers.size() - 1);

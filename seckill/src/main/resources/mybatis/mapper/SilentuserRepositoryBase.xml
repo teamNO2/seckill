@@ -453,7 +453,7 @@
     <select id="selectManager" resultType="com.suixingpay.entity.Manager">
         select `manage_id`,`manage_name`
         from `manager`
-        where `manage_isgrab` = 1
+        where `manage_isgrab` = 1 and `manage_province`=#{manageProvince}
     </select>
 
     <!--

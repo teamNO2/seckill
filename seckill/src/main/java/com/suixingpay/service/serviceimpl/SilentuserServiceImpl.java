@@ -27,8 +27,8 @@ public class SilentuserServiceImpl implements SilentuserService {
      * 查询出抢到沉默用户的鑫管家
      * @return
      */
-    public List<Manager> selectManager(){
-        return silentuserRepository.selectManager();
+    public List<Manager> selectManager(String manageProvince){
+        return silentuserRepository.selectManager(manageProvince);
     }
 
     /**
