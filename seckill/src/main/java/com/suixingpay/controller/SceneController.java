@@ -3,6 +3,8 @@ package com.suixingpay.controller;
 import com.suixingpay.entity.Scene;
 import com.suixingpay.service.SceneService;
 import com.suixingpay.utils.GenericResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +16,14 @@ import java.util.concurrent.Callable;
  */
 @RestController
 @RequestMapping("/scene")
+@Api("秒杀活动配置模块")
 public class SceneController {
     @Autowired
     private SceneService sceneService;
 
     //新增活动
     @PostMapping("/insertScene")
+    @ApiOperation(value = "添加活动配置",notes = "添加秒杀活动配置")
     public Callable<GenericResponse> insertScene(Scene scene) {
         int i = sceneService.insertScene(scene);
         if (i != 0) {
@@ -31,6 +35,7 @@ public class SceneController {
 
     //查询所有活动
     @GetMapping("/getAllScenes")
+    @ApiOperation(value = "查询活动列表",notes = "查询所有秒杀活动配置信息")
     public Callable<GenericResponse> getAllScenes() {
         List<Scene> allScenes = sceneService.getAllScenes();
         if (allScenes != null) {
@@ -42,6 +47,7 @@ public class SceneController {
 
     //按id查询活动
     @GetMapping("/selectById/{scene_id}")
+    @ApiOperation(value = "按id查询活动",notes = "按id查询活动")
     public Callable<GenericResponse> selectById(@PathVariable("scene_id") Integer id) {
         Scene scene = sceneService.selectById(id);
         if (scene != null) {
