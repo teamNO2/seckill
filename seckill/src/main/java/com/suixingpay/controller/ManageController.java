@@ -9,4 +9,5 @@ package com.suixingpay.controller;
  */
 public class ManageController {
 
+
 }
