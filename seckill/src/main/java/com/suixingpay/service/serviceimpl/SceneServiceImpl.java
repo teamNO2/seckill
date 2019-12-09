@@ -20,6 +20,7 @@ import java.util.List;
  *@Author sunkeqiang
  */
 @Service
+@Slf4j
 public class SceneServiceImpl implements SceneService {
     @Autowired
     private SceneRepository sceneRepository;

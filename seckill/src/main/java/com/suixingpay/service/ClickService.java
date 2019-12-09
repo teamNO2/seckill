@@ -14,5 +14,4 @@ import java.util.concurrent.Callable;
  */
 public interface ClickService {
   Manager Click(Integer managerId);
-  //
 }
