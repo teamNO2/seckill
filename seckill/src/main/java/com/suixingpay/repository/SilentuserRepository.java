@@ -28,6 +28,7 @@ public interface SilentuserRepository {
      * 查询已被鑫管家抢到的沉默用户
      */
     Silentuser selectSilentuser();
+
     /**
      * 张佳鑫
      * 查询鑫管家抢到的用户通知和沉默用户
