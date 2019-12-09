@@ -438,5 +438,16 @@
         <include refid="findPageWithWhereLike" />
     </select>
 
+    <select id="selectSilentuser" resultType="com.suixingpay.entity.Silentuser">
+        select `user_name`,`user_tel`,`user_sex`,`user_address`,`user_time`
+        from `silentuser`
+        where `manage_id` is not null
+    </select>
+
+
+
+
+
+
 
 </mapper>

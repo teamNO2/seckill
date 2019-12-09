@@ -33,4 +33,6 @@ public interface ManagerRepository {
      * @Date: 2019/12/8
      */
     Manager selectManagerByCity(String City,int manageId);
+
+    int updateManageByManageId(int id);
 }

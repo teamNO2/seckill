@@ -23,6 +23,11 @@ import java.util.List;
 @Mapper
 @Repository
 public interface SilentuserRepository {
+    /**
+     * 柴宇航
+     * 查询已被鑫管家抢到的沉默用户
+     */
+    Silentuser selectSilentuser();
 
     //查询鑫管家抢到的用户通知
     List<Silentuser> selectByManagerId(String managerId);
