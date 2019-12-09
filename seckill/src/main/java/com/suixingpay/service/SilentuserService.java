@@ -11,7 +11,7 @@ public interface SilentuserService {
      * 查询参加活动的沉默用户
      * @return
      */
-    List<Silentuser> selectSilentuser(String userAddress);
+    List<Silentuser> selectSilentuser(String userProvince);
 
     /**
      * 柴宇航

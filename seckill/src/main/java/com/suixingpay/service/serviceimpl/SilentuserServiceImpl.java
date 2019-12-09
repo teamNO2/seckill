@@ -15,11 +15,11 @@ public class SilentuserServiceImpl implements SilentuserService {
     private SilentuserRepository silentuserRepository;
     /**
      * 柴宇航
-     * 查询出所有被鑫管家抢到的沉默用户
+     * 查询出参与活动的沉默用户
      * @return
      */
-    public List<Silentuser> selectSilentuser(String userAddress){
-        return silentuserRepository.selectSilentuser(userAddress);
+    public List<Silentuser> selectSilentuser(String userProvince){
+        return silentuserRepository.selectSilentuser(userProvince);
     }
 
     /**
