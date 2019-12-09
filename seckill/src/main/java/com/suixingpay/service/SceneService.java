@@ -13,4 +13,5 @@ public interface SceneService {
 
     //按id查询活动
     Scene selectById(Integer id);
+
 }

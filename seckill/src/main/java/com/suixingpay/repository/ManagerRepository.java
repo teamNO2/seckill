@@ -22,6 +22,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
+//管家信息
 public interface ManagerRepository {
     Manager selectById(String id);
 

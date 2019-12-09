@@ -22,6 +22,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
+//沉默用户
 public interface SilentuserRepository {
     /**
      * 柴宇航

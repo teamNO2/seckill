@@ -1,135 +1,135 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.suixingpay.repository.SilentuserRepository" >
+<mapper namespace="com.suixingpay.repository.SilentuserRepository">
 
-    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Silentuser" >
-        <id column="user_id" property="userId" jdbcType="INTEGER" />
-        <result column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
-        <result column="user_sex" property="userSex" jdbcType="INTEGER" />
-        <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
-        <result column="user_iswhite" property="userIswhite" jdbcType="INTEGER" />
-        <result column="manage_id" property="manageId" jdbcType="INTEGER" />
-        <result column="user_time" property="userTime" jdbcType="VARCHAR" />
-        <result column="user_isbyebye" property="userIsbyebye" jdbcType="INTEGER" />
-        <result column="user_province" property="userProvince" jdbcType="VARCHAR" />
+    <resultMap id="BaseResultMap" type="com.suixingpay.entity.Silentuser">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_tel" property="userTel" jdbcType="VARCHAR"/>
+        <result column="user_sex" property="userSex" jdbcType="INTEGER"/>
+        <result column="user_address" property="userAddress" jdbcType="VARCHAR"/>
+        <result column="user_iswhite" property="userIswhite" jdbcType="INTEGER"/>
+        <result column="manage_id" property="manageId" jdbcType="INTEGER"/>
+        <result column="user_time" property="userTime" jdbcType="VARCHAR"/>
+        <result column="user_isbyebye" property="userIsbyebye" jdbcType="INTEGER"/>
+        <result column="user_province" property="userProvince" jdbcType="VARCHAR"/>
     </resultMap>
 
 
-    <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
         `user_id`,`user_name`,`user_tel`,`user_sex`,`user_address`,`user_iswhite`,`manage_id`,`user_time`,`user_isbyebye`,`user_province`
     </sql>
 
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from `silentuser`
         where `user_id` = #{userId,jdbcType=INTEGER}
     </delete>
 
 
-    <insert id="insert" parameterType="com.suixingpay.entity.Silentuser" >
+    <insert id="insert" parameterType="com.suixingpay.entity.Silentuser">
         insert into `silentuser` (`user_id`,`user_name`,`user_tel`,`user_sex`,`user_address`,`user_iswhite`,`manage_id`,`user_time`,`user_isbyebye`,`user_province`)
         values (#{userId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR},#{userTel,jdbcType=VARCHAR},#{userSex,jdbcType=INTEGER},#{userAddress,jdbcType=VARCHAR},#{userIswhite,jdbcType=INTEGER},#{manageId,jdbcType=INTEGER},#{userTime,jdbcType=VARCHAR},#{userIsbyebye,jdbcType=INTEGER},#{userProvince,jdbcType=VARCHAR})
     </insert>
 
 
-    <insert id="insertSelective" parameterType="com.suixingpay.entity.Silentuser" >
+    <insert id="insertSelective" parameterType="com.suixingpay.entity.Silentuser">
         insert into `silentuser`
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="userId != null or userId == 0" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null or userId == 0">
                 `user_id`,
             </if>
-            <if test="userName != null" >
+            <if test="userName != null">
                 `user_name`,
             </if>
-            <if test="userTel != null" >
+            <if test="userTel != null">
                 `user_tel`,
             </if>
-            <if test="userSex != null or userSex == 0" >
+            <if test="userSex != null or userSex == 0">
                 `user_sex`,
             </if>
-            <if test="userAddress != null" >
+            <if test="userAddress != null">
                 `user_address`,
             </if>
-            <if test="userIswhite != null or userIswhite == 0" >
+            <if test="userIswhite != null or userIswhite == 0">
                 `user_iswhite`,
             </if>
-            <if test="manageId != null or manageId == 0" >
+            <if test="manageId != null or manageId == 0">
                 `manage_id`,
             </if>
-            <if test="userTime != null" >
+            <if test="userTime != null">
                 `user_time`,
             </if>
-            <if test="userIsbyebye != null or userIsbyebye == 0" >
+            <if test="userIsbyebye != null or userIsbyebye == 0">
                 `user_isbyebye`,
             </if>
-            <if test="userProvince != null" >
+            <if test="userProvince != null">
                 `user_province`,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="userId != null or userId == 0" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null or userId == 0">
                 #{userId,jdbcType=INTEGER},
             </if>
-            <if test="userName != null" >
+            <if test="userName != null">
                 #{userName,jdbcType=VARCHAR},
             </if>
-            <if test="userTel != null" >
+            <if test="userTel != null">
                 #{userTel,jdbcType=VARCHAR},
             </if>
-            <if test="userSex != null or userSex == 0" >
+            <if test="userSex != null or userSex == 0">
                 #{userSex,jdbcType=INTEGER},
             </if>
-            <if test="userAddress != null" >
+            <if test="userAddress != null">
                 #{userAddress,jdbcType=VARCHAR},
             </if>
-            <if test="userIswhite != null or userIswhite == 0" >
+            <if test="userIswhite != null or userIswhite == 0">
                 #{userIswhite,jdbcType=INTEGER},
             </if>
-            <if test="manageId != null or manageId == 0" >
+            <if test="manageId != null or manageId == 0">
                 #{manageId,jdbcType=INTEGER},
             </if>
-            <if test="userTime != null" >
+            <if test="userTime != null">
                 #{userTime,jdbcType=VARCHAR},
             </if>
-            <if test="userIsbyebye != null or userIsbyebye == 0" >
+            <if test="userIsbyebye != null or userIsbyebye == 0">
                 #{userIsbyebye,jdbcType=INTEGER},
             </if>
-            <if test="userProvince != null" >
+            <if test="userProvince != null">
                 #{userProvince,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
 
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Silentuser" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.suixingpay.entity.Silentuser">
         update `silentuser`
-        <set >
-            <if test="userName != null" >
+        <set>
+            <if test="userName != null">
                 `user_name` = #{userName,jdbcType=VARCHAR},
             </if>
-            <if test="userTel != null" >
+            <if test="userTel != null">
                 `user_tel` = #{userTel,jdbcType=VARCHAR},
             </if>
-            <if test="userSex != null or userSex == 0" >
+            <if test="userSex != null or userSex == 0">
                 `user_sex` = #{userSex,jdbcType=INTEGER},
             </if>
-            <if test="userAddress != null" >
+            <if test="userAddress != null">
                 `user_address` = #{userAddress,jdbcType=VARCHAR},
             </if>
-            <if test="userIswhite != null or userIswhite == 0" >
+            <if test="userIswhite != null or userIswhite == 0">
                 `user_iswhite` = #{userIswhite,jdbcType=INTEGER},
             </if>
-            <if test="manageId != null or manageId == 0" >
+            <if test="manageId != null or manageId == 0">
                 `manage_id` = #{manageId,jdbcType=INTEGER},
             </if>
-            <if test="userTime != null" >
+            <if test="userTime != null">
                 `user_time` = #{userTime,jdbcType=VARCHAR},
             </if>
-            <if test="userIsbyebye != null or userIsbyebye == 0" >
+            <if test="userIsbyebye != null or userIsbyebye == 0">
                 `user_isbyebye` = #{userIsbyebye,jdbcType=INTEGER},
             </if>
-            <if test="userProvince != null" >
+            <if test="userProvince != null">
                 `user_province` = #{userProvince,jdbcType=VARCHAR},
             </if>
         </set>
@@ -137,7 +137,7 @@
     </update>
 
 
-    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Silentuser" >
+    <update id="updateByPrimaryKey" parameterType="com.suixingpay.entity.Silentuser">
         update `silentuser` set
         `user_name` = #{userName,jdbcType=VARCHAR},
         `user_tel` = #{userTel,jdbcType=VARCHAR},
@@ -152,10 +152,10 @@
     </update>
 
 
-    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `silentuser`
+        <include refid="Base_Column_List"/>
+        from `silentuser`
         where `user_id` = #{userId,jdbcType=INTEGER}
     </select>
 
@@ -167,36 +167,36 @@
     </select>
 
 
-    <sql id="findPageWithWhere" >
-        <where> 1=1
-            <if test="userId != null or userId == 0" >
+    <sql id="findPageWithWhere">
+        <where>1=1
+            <if test="userId != null or userId == 0">
                 and `user_id` = #{userId,jdbcType=INTEGER}
             </if>
-            <if test="userName != null" >
+            <if test="userName != null">
                 and `user_name` = #{userName,jdbcType=VARCHAR}
             </if>
-            <if test="userTel != null" >
+            <if test="userTel != null">
                 and `user_tel` = #{userTel,jdbcType=VARCHAR}
             </if>
-            <if test="userSex != null or userSex == 0" >
+            <if test="userSex != null or userSex == 0">
                 and `user_sex` = #{userSex,jdbcType=INTEGER}
             </if>
-            <if test="userAddress != null" >
+            <if test="userAddress != null">
                 and `user_address` = #{userAddress,jdbcType=VARCHAR}
             </if>
-            <if test="userIswhite != null or userIswhite == 0" >
+            <if test="userIswhite != null or userIswhite == 0">
                 and `user_iswhite` = #{userIswhite,jdbcType=INTEGER}
             </if>
-            <if test="manageId != null or manageId == 0" >
+            <if test="manageId != null or manageId == 0">
                 and `manage_id` = #{manageId,jdbcType=INTEGER}
             </if>
-            <if test="userTime != null" >
+            <if test="userTime != null">
                 and `user_time` = #{userTime,jdbcType=VARCHAR}
             </if>
-            <if test="userIsbyebye != null or userIsbyebye == 0" >
+            <if test="userIsbyebye != null or userIsbyebye == 0">
                 and `user_isbyebye` = #{userIsbyebye,jdbcType=INTEGER}
             </if>
-            <if test="userProvince != null" >
+            <if test="userProvince != null">
                 and `user_province` = #{userProvince,jdbcType=VARCHAR}
             </if>
 
@@ -244,61 +244,71 @@
                 <foreach collection="includes.keys" item="k" separator=" ">
                     <if test='k == "userId" and includes[k] != null'>
                         and `user_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userName" and includes[k] != null'>
                         and `user_name` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userTel" and includes[k] != null'>
                         and `user_tel` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userSex" and includes[k] != null'>
                         and `user_sex` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userAddress" and includes[k] != null'>
                         and `user_address` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userIswhite" and includes[k] != null'>
                         and `user_iswhite` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "manageId" and includes[k] != null'>
                         and `manage_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userTime" and includes[k] != null'>
                         and `user_time` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userIsbyebye" and includes[k] != null'>
                         and `user_isbyebye` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
                     <if test='k == "userProvince" and includes[k] != null'>
                         and `user_province` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")"
+                                 index="index">
                             #{itemValue}
                         </foreach>
                     </if>
@@ -307,36 +317,36 @@
         </where>
     </sql>
 
-    <sql id="findPageWithWhereLike" >
-        <where> 1=1
-            <if test="userId != null or userId == 0" >
+    <sql id="findPageWithWhereLike">
+        <where>1=1
+            <if test="userId != null or userId == 0">
                 and `user_id` like concat('%', #{userId,jdbcType=INTEGER}, '%')
             </if>
-            <if test="userName != null" >
+            <if test="userName != null">
                 and `user_name` like concat('%', #{userName,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="userTel != null" >
+            <if test="userTel != null">
                 and `user_tel` like concat('%', #{userTel,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="userSex != null or userSex == 0" >
+            <if test="userSex != null or userSex == 0">
                 and `user_sex` like concat('%', #{userSex,jdbcType=INTEGER}, '%')
             </if>
-            <if test="userAddress != null" >
+            <if test="userAddress != null">
                 and `user_address` like concat('%', #{userAddress,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="userIswhite != null or userIswhite == 0" >
+            <if test="userIswhite != null or userIswhite == 0">
                 and `user_iswhite` like concat('%', #{userIswhite,jdbcType=INTEGER}, '%')
             </if>
-            <if test="manageId != null or manageId == 0" >
+            <if test="manageId != null or manageId == 0">
                 and `manage_id` like concat('%', #{manageId,jdbcType=INTEGER}, '%')
             </if>
-            <if test="userTime != null" >
+            <if test="userTime != null">
                 and `user_time` like concat('%', #{userTime,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="userIsbyebye != null or userIsbyebye == 0" >
+            <if test="userIsbyebye != null or userIsbyebye == 0">
                 and `user_isbyebye` like concat('%', #{userIsbyebye,jdbcType=INTEGER}, '%')
             </if>
-            <if test="userProvince != null" >
+            <if test="userProvince != null">
                 and `user_province` like concat('%', #{userProvince,jdbcType=VARCHAR}, '%')
             </if>
         </where>
@@ -344,7 +354,7 @@
 
 
     <sql id="findPageWithOrder">
-        <if test="null != orders" >
+        <if test="null != orders">
             ORDER BY
             <foreach collection="orders.keys" item="k" separator=",">
                 <if test='k == "userId"'>
@@ -388,54 +398,54 @@
     </sql>
 
 
-    <select id="findOne" parameterType="com.suixingpay.entity.Silentuser" resultMap="BaseResultMap" >
+    <select id="findOne" parameterType="com.suixingpay.entity.Silentuser" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `silentuser`
-        <include refid="findPageWithWhere" />
+        <include refid="Base_Column_List"/>
+        from `silentuser`
+        <include refid="findPageWithWhere"/>
         limit 1
     </select>
 
 
-    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Silentuser" resultMap="BaseResultMap" >
+    <select id="findAllWithResult" parameterType="com.suixingpay.entity.Silentuser" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `silentuser`
-        <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
+        <include refid="Base_Column_List"/>
+        from `silentuser`
+        <include refid="findPageWithWhere"/>
+        <include refid="findPageWithOrder"/>
     </select>
 
 
-    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Silentuser" resultMap="BaseResultMap" >
+    <select id="findPageWithResult" parameterType="com.suixingpay.entity.Silentuser" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `silentuser`
-        <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
+        <include refid="Base_Column_List"/>
+        from `silentuser`
+        <include refid="findPageWithWhere"/>
+        <include refid="findPageWithOrder"/>
         limit #{start},#{pageSize}
     </select>
 
 
-    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Silentuser" resultType="java.lang.Integer" >
+    <select id="findPageWithCount" parameterType="com.suixingpay.entity.Silentuser" resultType="java.lang.Integer">
         select count(1)
         from `silentuser`
-        <include refid="findPageWithWhere" />
+        <include refid="findPageWithWhere"/>
     </select>
 
-    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Silentuser" resultMap="BaseResultMap" >
+    <select id="findPageWithResultLike" parameterType="com.suixingpay.entity.Silentuser" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from  `silentuser`
-        <include refid="findPageWithWhereLike" />
-        <include refid="findPageWithOrder" />
+        <include refid="Base_Column_List"/>
+        from `silentuser`
+        <include refid="findPageWithWhereLike"/>
+        <include refid="findPageWithOrder"/>
         limit #{start},#{pageSize}
     </select>
 
 
-    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Silentuser" resultType="java.lang.Integer" >
+    <select id="findPageWithCountLike" parameterType="com.suixingpay.entity.Silentuser" resultType="java.lang.Integer">
         select count(1)
         from `silentuser`
-        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithWhereLike"/>
     </select>
 
     <select id="selectSilentuser" resultType="com.suixingpay.entity.Silentuser">
@@ -443,6 +453,7 @@
         from `silentuser`
         where `manage_id` is not null
     </select>
+
 
 
 

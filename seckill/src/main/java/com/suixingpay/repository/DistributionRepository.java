@@ -19,5 +19,7 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
+//连表
 public interface DistributionRepository {
+
 }

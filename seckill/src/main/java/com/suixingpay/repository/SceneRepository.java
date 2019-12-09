@@ -22,6 +22,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
+//活动信息
 public interface SceneRepository {
     //新增活动
     int insertSelective(Scene scene);
@@ -31,4 +32,7 @@ public interface SceneRepository {
 
     //按id查询活动
     Scene selectById(String id);
+
+    //石梦瑶  根据userID查询鑫管家id
+    Scene selectManagerId();
 }

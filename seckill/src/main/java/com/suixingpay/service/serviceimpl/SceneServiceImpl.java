@@ -30,4 +30,5 @@ public class SceneServiceImpl implements SceneService {
     public Scene selectById(Integer id) {
         return sceneRepository.selectById(String.valueOf(id));
     }
+
 }
