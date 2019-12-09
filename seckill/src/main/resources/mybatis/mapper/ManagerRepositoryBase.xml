@@ -286,6 +286,7 @@
         <include refid="findPageWithWhereLike" />
     </select>
 
+
     <select id="selectManagerByCity" resultType="com.suixingpay.entity.Manager" >
         select <include refid="Base_Column_List" />
         from manage
@@ -298,6 +299,12 @@
         where `manage_id` = #{manageId,jdbcType=INTEGER}
     </update>
 
+
+
+    <!-- 根据鑫管家名称和密码登录 -->
+    <select id="selectManagerByNameAndPassword" parameterType="com.suixingpay.entity.Manager" resultType="com.suixingpay.entity.Manager">
+        select <include refid="Base_Column_List" /> from `manager` where `manage_name` = #{manageName} and `manage_password` = #{managePassword}
+    </select>
 
 
 
