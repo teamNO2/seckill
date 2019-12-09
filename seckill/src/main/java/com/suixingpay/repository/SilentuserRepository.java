@@ -15,6 +15,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import java.util.List;
+
+/**
+ * @description:
+ * @author: 孙克强<sun_kq@suixingpay.com>
+ * @date: 2019/12/08 14:49
+ * @version: V1.0
+ */
 @Mapper
 @Repository
 public interface SilentuserRepository {
@@ -40,4 +48,15 @@ public interface SilentuserRepository {
      * 根据user_id修改沉默用户为轮空用户
      */
     int updateSilentuserIsbyebye(int userId);
+    Silentuser selectSilentuser();
+    /**
+     * 张佳鑫
+     * 查询鑫管家抢到的用户通知和沉默用户
+     */
+    //查询鑫管家抢到的用户通知
+    List<Silentuser> selectByManagerId(String managerId);
+
+    //查询抢到的沉默用户
+    Silentuser selectById(String userId);
+
 }

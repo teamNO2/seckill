@@ -293,6 +293,18 @@
         where manageProvince = #{manageProvince} and manageId = #{manageId}
     </select>
 
+    <update id="updateManageByManageId"  parameterType="java.lang.Integer">
+        update `manager` set
+        `manage_isgrab` = 1
+        where `manage_id` = #{manageId,jdbcType=INTEGER}
+    </update>
+
+
+
+    <!-- 根据鑫管家名称和密码登录 -->
+    <select id="selectManagerByNameAndPassword" parameterType="com.suixingpay.entity.Manager" resultType="com.suixingpay.entity.Manager">
+        select <include refid="Base_Column_List" /> from `manager` where `manage_name` = #{manageName} and `manage_password` = #{managePassword}
+    </select>
 
 
 </mapper>
