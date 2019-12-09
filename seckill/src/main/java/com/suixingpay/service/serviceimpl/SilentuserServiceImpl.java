@@ -1,23 +1,54 @@
 package com.suixingpay.service.serviceimpl;
 
+import com.suixingpay.entity.Manager;
 import com.suixingpay.entity.Silentuser;
 import com.suixingpay.repository.SilentuserRepository;
 import com.suixingpay.service.SilentuserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SilentuserServiceImpl implements SilentuserService {
     @Autowired
     private SilentuserRepository silentuserRepository;
-
     /**
      * 柴宇航
      * 查询出所有被鑫管家抢到的沉默用户
      * @return
      */
-    public Silentuser selectSilentuser(){
-        return silentuserRepository.selectSilentuser();
+    public List<Silentuser> selectSilentuser(String userAddress){
+        return silentuserRepository.selectSilentuser(userAddress);
+    }
+
+    /**
+     * 柴宇航
+     * 查询出抢到沉默用户的鑫管家
+     * @return
+     */
+    public List<Manager> selectManager(){
+        return silentuserRepository.selectManager();
+    }
+
+    /**
+     * 柴宇航
+     * 根据user_id修改manage_id改成已被分配
+     * @param userId
+     * @return
+     */
+    public int updateManagerId(int manageId,int userId){
+        return silentuserRepository.updateManagerId(manageId,userId);
+    }
+
+    /**
+     * 柴宇航
+     * 根据user_id修改沉默用户为轮空
+     * @param userId
+     * @return
+     */
+    public int updateSilentuserIsbyebye(int userId){
+        return silentuserRepository.updateSilentuserIsbyebye(userId);
     }
 
 }

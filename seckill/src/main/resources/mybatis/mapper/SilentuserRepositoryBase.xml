@@ -430,12 +430,40 @@
         from `silentuser`
         <include refid="findPageWithWhereLike" />
     </select>
-
+    <!--
+            柴宇航
+            查询出参加活动的用户
+     -->
     <select id="selectSilentuser" resultType="com.suixingpay.entity.Silentuser">
-        select `user_name`,`user_tel`,`user_sex`,`user_address`,`user_time`
+        select `user_id`,`user_name`,`user_tel`,`user_sex`,`user_address`,`user_time`
         from `silentuser`
-        where `manage_id` is not null
+        where `user_address`=#{userAddress} and `manage_id` is null
     </select>
+    <!--
+        柴宇航
+        查询出抢到沉默用户的鑫管家
+    -->
+    <select id="selectManager" resultType="com.suixingpay.entity.Manager">
+        select `manage_id`,`manage_name`
+        from `manager`
+        where `manage_isgrab` = 1
+    </select>
+
+    <!--
+        柴宇航
+        根据id修改manage_id改成已被分配
+    -->
+    <update id="updateManagerId" parameterType="com.suixingpay.entity.Silentuser">
+        update `silentuser` set `manage_id`=#{manageId} where `user_id`=#{userId}
+    </update>
+    
+    <!-- 
+        柴宇航
+        根据user_id将用户改成轮空用户
+    -->
+    <update id="updateSilentuserIsbyebye" parameterType="com.suixingpay.entity.Silentuser">
+        update `silentuser` set `user_isbyebye`=1 where `user_id`=#{userId}
+    </update>
 
 
 
