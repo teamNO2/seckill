@@ -4,6 +4,11 @@ import com.suixingpay.entity.Silentuser;
 
 import java.util.List;
 
+/**
+ * 张佳鑫
+ * 查询鑫管家抢到的用户通知和沉默用户
+ */
+
 public interface ManagerMessageService {
 
     //查询鑫管家抢到的用户通知
