@@ -8,8 +8,11 @@
  */
 package com.suixingpay.repository;
 
+import com.suixingpay.entity.Silentuser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @description:
@@ -20,4 +23,19 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface SilentuserRepository {
+    /**
+     * 柴宇航
+     * 查询已被鑫管家抢到的沉默用户
+     */
+    Silentuser selectSilentuser();
+    /**
+     * 张佳鑫
+     * 查询鑫管家抢到的用户通知和沉默用户
+     */
+    //查询鑫管家抢到的用户通知
+    List<Silentuser> selectByManagerId(String managerId);
+
+    //查询抢到的沉默用户
+    Silentuser selectById(String userId);
+
 }

@@ -159,6 +159,13 @@
         where `user_id` = #{userId,jdbcType=INTEGER}
     </select>
 
+    <select id="selectByManagerId" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `silentuser`
+        where `manage_id` = #{manageId,jdbcType=INTEGER}
+    </select>
+
 
     <sql id="findPageWithWhere" >
         <where> 1=1
@@ -430,6 +437,17 @@
         from `silentuser`
         <include refid="findPageWithWhereLike" />
     </select>
+
+    <select id="selectSilentuser" resultType="com.suixingpay.entity.Silentuser">
+        select `user_name`,`user_tel`,`user_sex`,`user_address`,`user_time`
+        from `silentuser`
+        where `manage_id` is not null
+    </select>
+
+
+
+
+
 
 
 </mapper>

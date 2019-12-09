@@ -11,4 +11,10 @@ dependencies {
     compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.3.2'
     //test
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    //swagger2
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.6'
+    //webjars
+    compile group: 'org.webjars', name: 'jquery', version: '3.3.1-1'
 }
