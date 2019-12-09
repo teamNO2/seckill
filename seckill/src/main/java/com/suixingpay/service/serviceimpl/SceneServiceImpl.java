@@ -5,6 +5,7 @@ import com.suixingpay.repository.SceneRepository;
 import com.suixingpay.service.SceneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.nio.ch.ThreadPool;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ import java.util.List;
 public class SceneServiceImpl implements SceneService {
     @Autowired
     private SceneRepository sceneRepository;
+
+    ThreadPool pool = null;
 
     @Override
     public int insertScene(Scene scene) {
