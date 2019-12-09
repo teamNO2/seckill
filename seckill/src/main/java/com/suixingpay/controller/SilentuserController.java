@@ -26,9 +26,9 @@ public class SilentuserController {
      * 分配沉默用户给鑫管家接口
      * @return
      */
-    @GetMapping("/distributionSilentuser/{userProvince}")
+    @PostMapping("/distributionSilentuser")
     @ApiOperation(value = "分配沉默用户",notes = "通过鑫管家是否抢到沉默用户给予分配并修改未被鑫管家抢到的沉默用户改为轮空用户")
-    public Callable<GenericResponse> distributionSilentuser(@PathVariable String userProvince) {
+    public Callable<GenericResponse> distributionSilentuser(@RequestParam("userProvince") String userProvince) {
         List<Silentuser> silentusers = silentuserService.selectSilentuser(userProvince);
         List<Manager> managers = silentuserService.selectManager(userProvince);
         for(Silentuser s:silentusers){
