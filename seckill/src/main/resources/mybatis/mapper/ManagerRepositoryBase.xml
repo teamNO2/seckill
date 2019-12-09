@@ -286,7 +286,6 @@
         <include refid="findPageWithWhereLike" />
     </select>
 
-
     <select id="selectManagerByCity" resultType="com.suixingpay.entity.Manager" >
         select <include refid="Base_Column_List" />
         from manage
@@ -298,6 +297,7 @@
         `manage_isgrab` = 1
         where `manage_id` = #{manageId,jdbcType=INTEGER}
     </update>
+
 
 
 

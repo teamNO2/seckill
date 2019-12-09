@@ -26,4 +26,5 @@ public interface SilentuserRepository {
      * 查询已被鑫管家抢到的沉默用户
      */
     Silentuser selectSilentuser();
+
 }

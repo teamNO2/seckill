@@ -1,5 +1,6 @@
 package com.suixingpay.controller;
 
+import com.suixingpay.entity.Manager;
 import com.suixingpay.entity.Scene;
 import com.suixingpay.entity.Silentuser;
 import com.suixingpay.service.SceneService;
@@ -38,5 +39,6 @@ public class SilentuserController {
         } else {
             return () -> GenericResponse.failed("selectSilentuser999", "查询失败");
         }
+
     }
 }
