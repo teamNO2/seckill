@@ -24,9 +24,12 @@ public class ManagerMessageController {
     @Autowired
     private ManagerMessageService managerMessageService;
 
-    //根据鑫管家id查询鑫管家抢到的所有用户通知
+    /**
+     * 张佳鑫
+     * 查询鑫管家抢到的所有用户通知
+     */
     @GetMapping("/searchAllUserInfo/{managerId}")
-    @ApiOperation(value = "鑫管家查询已抢到用户模块",notes = "根据鑫管家id查询鑫管家抢到的所有用户通知")
+    @ApiOperation(value = "鑫管家查询已抢到所有用户模块",notes = "根据鑫管家id查询鑫管家抢到的所有用户通知")
     public Callable<GenericResponse> searchAllUserInfo(@PathVariable("managerId") Integer managerId){
         //Manager manager = (Manager) request.getSession().getAttribute(String.valueOf(request.getHeader("manage_Id")));
         //Integer managerId = manager.getManageId();
@@ -38,8 +41,12 @@ public class ManagerMessageController {
         }
     }
 
-    //查询抢到的沉默用户
+    /**
+     * 张佳鑫
+     * 查询鑫管家抢到的沉默用户详细
+     */
     @GetMapping("/searchUserInfo/{userId}")
+    @ApiOperation(value = "鑫管家查询已抢到沉默用户模块",notes = "根据沉默用户id查询鑫管家抢到的和用户详细")
     public Callable<GenericResponse> searchUserInfo(@PathVariable("userId") Integer userId){
         Silentuser silentuser = managerMessageService.searchUserInfo(userId);
         if (silentuser != null) {
