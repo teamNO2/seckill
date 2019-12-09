@@ -33,6 +33,8 @@ public interface SilentuserRepository {
      * 柴宇航
      * 根据user_id修改manag_id改成已被分配
      */
+    Silentuser selectSilentuser();
+
     int updateManagerId(int manageId,int userId);
 
     /**
@@ -44,12 +46,15 @@ public interface SilentuserRepository {
 
     /**
      * 张佳鑫
-     * 查询鑫管家抢到的用户通知和沉默用户
+     * 查询鑫管家抢到的所有用户通知
      */
-    //查询鑫管家抢到的用户通知
     List<Silentuser> selectByManagerId(String managerId);
 
-    //查询抢到的沉默用户
+    /**
+     * 张佳鑫
+     * 查询鑫管家抢到的沉默用户详细
+     */
     Silentuser selectById(String userId);
+
 
 }

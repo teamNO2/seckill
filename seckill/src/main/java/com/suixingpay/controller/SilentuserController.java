@@ -1,6 +1,8 @@
 package com.suixingpay.controller;
 
 import com.suixingpay.entity.Manager;
+import com.suixingpay.entity.Scene;
+import com.suixingpay.entity.Manager;
 import com.suixingpay.entity.Silentuser;
 import com.suixingpay.service.SilentuserService;
 import com.suixingpay.utils.GenericResponse;
@@ -41,5 +43,6 @@ public class SilentuserController {
             }
         }
        return () -> GenericResponse.success("distributionSilentuser666", "分配成功");
+
     }
 }

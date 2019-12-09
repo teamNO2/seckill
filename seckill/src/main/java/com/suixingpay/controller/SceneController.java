@@ -56,4 +56,23 @@ public class SceneController {
             return () -> GenericResponse.failed("selectById999", "查询失败");
         }
     }
+
+
+    /**
+     * @Description: 根据时间查询活动
+     * @Param: [time]
+     * @return: java.util.concurrent.Callable<com.suixingpay.utils.GenericResponse>
+     * @Author: lichanghao
+     * @Date: 2019/12/9
+     */
+    @PostMapping("/selectSceneByTime")
+    @ApiOperation(value = "按time查询活动",notes = "按time查询活动")
+    public Callable<GenericResponse> selectSceneByTime(@RequestParam("time") String time) {
+        Scene scene = sceneService.selectSceneByTime(time);
+        if (scene != null) {
+            return () -> GenericResponse.success("selectById666", "查询成功", scene);
+        } else {
+            return () -> GenericResponse.failed("selectById999", "查询失败");
+        }
+    }
 }
