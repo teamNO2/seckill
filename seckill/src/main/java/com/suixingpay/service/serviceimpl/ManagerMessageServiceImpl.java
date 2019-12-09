@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 张佳鑫
+ * 查询鑫管家抢到的用户通知和沉默用户
+ */
+
 @Service
 public class ManagerMessageServiceImpl implements ManagerMessageService {
 
