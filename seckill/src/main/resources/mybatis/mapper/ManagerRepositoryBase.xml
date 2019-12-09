@@ -293,6 +293,12 @@
         where manageProvince = #{manageProvince} and manageId = #{manageId}
     </select>
 
+    <update id="updateManageByManageId"  parameterType="java.lang.Integer">
+        update `manager` set
+        `manage_isgrab` = 1
+        where `manage_id` = #{manageId,jdbcType=INTEGER}
+    </update>
+
 
 
 </mapper>
