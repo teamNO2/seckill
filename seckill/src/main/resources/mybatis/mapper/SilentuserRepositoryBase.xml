@@ -453,7 +453,7 @@
     <select id="selectManager" resultType="com.suixingpay.entity.Manager">
         select `manage_id`,`manage_name`
         from `manager`
-        where `manage_isgrab` = 1 and `manage_province`=#{manageProvince}
+        where `manage_isgrab` = 1
     </select>
 
     <!--
@@ -463,8 +463,8 @@
     <update id="updateManagerId" parameterType="com.suixingpay.entity.Silentuser">
         update `silentuser` set `manage_id`=#{manageId} where `user_id`=#{userId}
     </update>
-    
-    <!-- 
+
+    <!--
         柴宇航
         根据user_id将用户改成轮空用户
     -->
@@ -472,3 +472,5 @@
         update `silentuser` set `user_isbyebye`=1 where `user_id`=#{userId}
     </update>
 </mapper>
+
+

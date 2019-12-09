@@ -4,6 +4,9 @@ package com.suixingpay.service;
 import com.suixingpay.entity.Manager;
 
 public interface ManagerService {
+    //石梦瑶
+    //根据管家id查询所有
+    Manager selectById(int manageId);
 
 
     /**

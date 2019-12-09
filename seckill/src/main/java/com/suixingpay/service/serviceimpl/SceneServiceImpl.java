@@ -25,8 +25,6 @@ public class SceneServiceImpl implements SceneService {
     @Autowired
     private SceneRepository sceneRepository;
 
-
-
     @Override
     public int insertScene(Scene scene) {
         return sceneRepository.insertSelective(scene);
