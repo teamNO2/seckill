@@ -31,4 +31,5 @@ public interface SceneRepository {
 
     //按id查询活动
     Scene selectById(String id);
+
 }
