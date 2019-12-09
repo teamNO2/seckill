@@ -57,6 +57,7 @@ public class SceneServiceImpl implements SceneService {
         Date needTime = null;
         Date startTime= null;
         Date endTime= null;
+        int index = 0;//给定一个查询标识
         try {
              needTime = format.parse(time);
         } catch (ParseException e) {
@@ -76,14 +77,26 @@ public class SceneServiceImpl implements SceneService {
             }
             //判断是否在活动时间内
             if( needTime.before(endTime)&&needTime.after(startTime)){
+                index= 1;
                 log.info("查询成功");
                 return scene;
             }
         }
+        //判断标识是否改变
+        if(index == 0){
+            log.debug("您查询的时间没有活动进行");
+        }
         return null;
-
     }
 
+
+    /**
+     * @Description: 查询某一场的沉默用户总数
+     * @Param: [id]
+     * @return: int
+     * @Author: lichanghao
+     * @Date: 2019/12/9
+     */
     @Override
     public int selectSceneNumberById(int id) {
         Scene scene = this.selectById(id);
