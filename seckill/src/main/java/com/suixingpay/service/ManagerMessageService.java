@@ -11,10 +11,16 @@ import java.util.List;
 
 public interface ManagerMessageService {
 
-    //查询鑫管家抢到的用户通知
+    /**
+     * 张佳鑫
+     * 查询鑫管家抢到的所有用户通知
+     */
     List<Silentuser> searchAllUserInfo(Integer managerId);
 
-    //查询抢到的沉默用户
+    /**
+     * 张佳鑫
+     * 查询鑫管家抢到的沉默用户详细
+     */
     Silentuser searchUserInfo(Integer userId);
 
 }
