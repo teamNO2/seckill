@@ -33,9 +33,9 @@ public interface SilentuserRepository {
      * @Author:柴宇航
      * @根据user_id修改manag_id改成已被分配
      */
-    Silentuser selectSilentuser();
 
-    int updateManagerId(int manageId,int userId);
+
+    int updateManagerId(int manageId,String userTime,int userId);
 
     /**
      * @Author:柴宇航

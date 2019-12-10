@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -43,7 +45,10 @@ public class SilentuserController {
             if(!managers.isEmpty()){
                 Manager manager = managers.get(managers.size() - 1);
                 managers.remove(manager);
-                int i = silentuserService.updateManagerId(manager.getManageId(), s.getUserId());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date=new Date();
+                String dateStr = simpleDateFormat.format(date);
+                silentuserService.updateManagerId(manager.getManageId(),dateStr,s.getUserId());
             }else{
                 silentuserService.updateSilentuserIsbyebye(s.getUserId());
                 index++;//记录+1
