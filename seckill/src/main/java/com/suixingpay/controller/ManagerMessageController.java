@@ -30,14 +30,20 @@ public class ManagerMessageController {
      */
     @GetMapping("/searchAllUserInfo/{managerId}")
     @ApiOperation(value = "鑫管家查询已抢到所有用户模块",notes = "根据鑫管家id查询鑫管家抢到的所有用户通知")
-    public Callable<GenericResponse> searchAllUserInfo(@PathVariable("managerId") Integer managerId){
+    public Callable<GenericResponse> searchAllUserInfo(@PathVariable("managerId") String managerId1){
+        String regex = "^[0-9]*[1-9][0-9]*$";
         //把鑫管家是否抢到沉默用户状态改变
-        List<Silentuser> allManager = managerMessageService.searchAllUserInfo(managerId);
-        int i = managerMessageService.updateManageByManageIsgrab(managerId);
-        if ((allManager != null)&&(i!=0)) {
-            return () -> GenericResponse.success("searchAllUserInfo666", "查询成功", allManager);
-        } else {
-            return () -> GenericResponse.failed("searchAllUserInfo999", "查询失败");
+        if(managerId1.matches(regex)){
+            Integer managerId  = Integer.valueOf(managerId1);
+            List<Silentuser> allManager = managerMessageService.searchAllUserInfo(managerId);
+            int i = managerMessageService.updateManageByManageIsgrab(managerId);
+            if ((allManager != null)&&(i!=0)) {
+                return () -> GenericResponse.success("searchAllUserInfo666", "查询成功", allManager);
+            } else {
+                return () -> GenericResponse.failed("searchAllUserInfo999", "查询失败");
+            }
+        }else{
+            return () -> GenericResponse.failed("searchAllUserInfo999", "输入的非数字或0");
         }
     }
 
@@ -47,12 +53,19 @@ public class ManagerMessageController {
      */
     @GetMapping("/searchUserInfo/{userId}")
     @ApiOperation(value = "鑫管家查询已抢到沉默用户模块",notes = "根据沉默用户id查询鑫管家抢到的和用户详细")
-    public Callable<GenericResponse> searchUserInfo(@PathVariable("userId") Integer userId){
-        Silentuser silentuser = managerMessageService.searchUserInfo(userId);
-        if (silentuser != null) {
-            return () -> GenericResponse.success("searchUserInfo666", "查询成功", silentuser);
-        } else {
-            return () -> GenericResponse.failed("searchUserInfo999", "查询失败");
+    public Callable<GenericResponse> searchUserInfo(@PathVariable("userId") String userId1) {
+        String regex = "^[0-9]*[1-9][0-9]*$";
+        if (userId1.matches(regex)) {
+            Integer userId = Integer.valueOf(userId1);
+            Silentuser silentuser = managerMessageService.searchUserInfo(userId);
+            if (silentuser != null) {
+                return () -> GenericResponse.success("searchUserInfo666", "查询成功", silentuser);
+            } else {
+                return () -> GenericResponse.failed("searchUserInfo999", "查询失败");
+            }
+        }
+        else{
+            return () -> GenericResponse.failed("searchAllUserInfo999", "输入的非数字或0");
         }
     }
 
