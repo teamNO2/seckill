@@ -78,10 +78,10 @@ public class ClickController {
             if (sceneService.selectById(sceneId).getSceneCount() > 0) {
                 //沉默用户大于0 写抢的代码
                 count--;
-                managerService.updateManageByManageId(managerId);
                 if(count<0){
                     return () -> GenericResponse.success("click666", "失败", noting);
                 }
+                managerService.updateManageByManageId(managerId);
                 System.out.println("已经抢走一个用户，还剩" + count);
                 return () -> GenericResponse.success("click666", "成功", success);
             }
