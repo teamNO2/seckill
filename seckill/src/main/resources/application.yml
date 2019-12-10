@@ -4,7 +4,7 @@ spring:
     username: root
     password: 123
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://www.wzdnnn:3306/seckill?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://www.wzdnnn.com:3306/seckill?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
   #指定全局配置文件的位置
