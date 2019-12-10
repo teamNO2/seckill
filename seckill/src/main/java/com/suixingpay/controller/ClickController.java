@@ -33,12 +33,12 @@ public class ClickController {
     private static int count = -1;
 
     @GetMapping("/clickRob/{sceneId}/{managerId}")
-    public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable Integer managerId) {
-        String end = "活动结束";
+    public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable Integer managerId) throws ParseException {
+
         String noting = "今日用户已经被抢完，请留意后续活动";
         String joined = "已经参加活动，请等待结果公布";
         String success = "恭喜您成功参加此次秒杀活动，待活动结束后，去意向客户查看您的用户信息，并请于 3 内完成拓展";
-        String nextscenestart = "下一场活动时间为,";
+        String nextscenestart = "下一场活动时间为：";
         String next = "您的归属地不在下一场活动开放范围内，请期待后续活动";
         String endPoint = "目前无活动，敬请期待";
         if (count == -1) {
@@ -46,30 +46,29 @@ public class ClickController {
         }
         //判断当前时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String today = sdf.format(new Date());
+        //获取活动的结束时间
         String s = sceneService.selectById(sceneId).getSceneEndtime();
         Date date = null;
-        Date day = null;
-        try {
-            date = sdf.parse(s);
-            day = sdf.parse(today);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        //判断活动是否结束
-        if (day.after(date)) {
+        date = sdf.parse(s);//数据库中的活动结束时间
+        //判断活动是否结束  当前时间是否在活动结束时间之后
+        if (new Date().after(date)) {
             Scene sc=sceneService.selectById(sceneId);
             String sceneEndtime = sc.getSceneEndtime().substring(0,10);
             Scene sc1=sceneService.selectById((sceneId + 1));
             String sceneEndtime1=sc1.getSceneEndtime().substring(0,10);
             if (sceneEndtime.equals(sceneEndtime1)){
+                //下一场的的城市跟鑫管家的所在城市是否在一个地方
                 if (managerService.selectById(managerId).getManageProvince().equals(sceneService.selectById((sceneId + 1)).getSceneProvince())) {
-                    String nextstarttime = sceneService.selectById(sceneId + 1).getSceneStarttime();
+                    String nextstarttime = sceneService.selectById((sceneId + 1)).getSceneStarttime();
+                    System.out.println(nextstarttime);
+                    //下一场活动时间为：
                     return () -> GenericResponse.success("selectById666", "活动结束", nextscenestart + nextstarttime + "敬请期待");
                 } else {
+                    //您的归属地不在下一场活动开放范围内，请期待后续活动
                     return () -> GenericResponse.success("selectById666", "活动结束", next);
                 }
             } else {
+                //目前无活动敬请期待
                 return () -> GenericResponse.success("selectById666", "活动结束", endPoint);
             }
 
@@ -81,6 +80,7 @@ public class ClickController {
                 if(count<0){
                     return () -> GenericResponse.success("click666", "失败", noting);
                 }
+                //更改管家领取用户的状态
                 managerService.updateManageByManageId(managerId);
                 System.out.println("已经抢走一个用户，还剩" + count);
                 return () -> GenericResponse.success("click666", "成功", success);
