@@ -321,6 +321,11 @@
         select <include refid="Base_Column_List" /> from `scene`
     </select>
 
+    <!-- 插入未分配的沉默用户 -->
+    <update id="updateUnallocated" parameterType="com.suixingpay.entity.Scene">
+        update `scene` set `scene_unallocated`=#{scene_unallocated} where `scene_id`=#{scene_id}
+    </update>
+
 
 
 

@@ -62,22 +62,28 @@ public class SceneServiceImpl implements SceneService {
             e.printStackTrace();
         }
         List<Scene> scenes = this.getAllScenes();
-        for (Scene scene:scenes){
+        for (Scene scene:scenes) {
             try {
-                 startTime = format.parse(scene.getSceneStarttime());
-                 endTime = format.parse(scene.getSceneEndtime());
+                startTime = format.parse(scene.getSceneStarttime());
+                endTime = format.parse(scene.getSceneEndtime());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             //判断是否获取数据成功
-            if (needTime==null||startTime==null||endTime==null){
-                 log.error("数据库获取数据异常");
-            }
-            //判断是否在活动时间内
-            if( needTime.before(endTime)&&needTime.after(startTime)){
-                index= 1;
-                log.info("查询成功");
-                return scene;
+            if (needTime == null || startTime == null || endTime == null) {
+                log.error("数据库获取数据异常");
+            } else {
+                //判断是否在活动时间内
+                if (needTime.before(endTime) && needTime.after(startTime)) {
+                    index = 1;
+                    log.info("查询成功");
+                    return scene;
+                }
+                if (!(needTime.before(startTime))&&(!needTime.after(startTime))){
+                    index = 1;
+                    log.info("查询成功");
+                    return scene;
+                }
             }
         }
         //判断标识是否改变
@@ -101,4 +107,18 @@ public class SceneServiceImpl implements SceneService {
         int index = scene.getSceneCount();
         return index;
     }
+
+
+    /**
+     * @Description: 记录每次活动未被认领的沉默用户数量
+     * @Param: [scene_unallocated, scene_id]
+     * @return: int
+     * @Author: lichanghao
+     * @Date: 2019/12/10
+     */
+    @Override
+    public int updateUnallocated(int sceneUnallocated, int sceneId) {
+        return sceneRepository.updateUnallocated(sceneUnallocated,sceneId);
+    }
+
 }

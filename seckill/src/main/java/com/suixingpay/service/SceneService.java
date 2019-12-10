@@ -18,4 +18,7 @@ public interface SceneService {
 
     Scene selectSceneByTime(String time);
 
+    //记录每次活动未被认领的沉默用户数量
+    int updateUnallocated(int sceneUnallocated,int sceneId);
+
 }
