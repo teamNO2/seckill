@@ -1,6 +1,6 @@
 spring:
   datasource:
-    #数据源基本配置
+    #数据源基本配置哈哈
     username: root
     password: 123
     driver-class-name: com.mysql.jdbc.Driver
