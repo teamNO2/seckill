@@ -1,10 +1,14 @@
 package com.suixingpay.controller;
 
+import com.suixingpay.config.RedisLock;
 import com.suixingpay.entity.Scene;
 import com.suixingpay.service.ManagerService;
 import com.suixingpay.service.SceneService;
 import com.suixingpay.utils.GenericResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +28,28 @@ import java.util.concurrent.Callable;
  */
 @RestController
 @RequestMapping("/click")
+@Slf4j
 public class ClickController {
     @Autowired
     private ManagerService managerService;
     @Autowired
     private SceneService sceneService;
+    @Autowired
+    private RedisLock redisLock;
 
-    private static int count = -1;
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
+
+    private static int count = 2;
+    // 锁名
+    private static final String ROP_TICKET_LOCK = "tickets:lock";
+    // 锁过期时间 30s
+    private static final Long ROP_TICKET_LOCK_TIME_OUT = 30000L;
+    // 获取锁超时时间 10s
+    private static final Long ROP_TICKET_LOCK_GET_TIME_OUT = 10000L;
+    // 消息存放key
+    private static final String ROP_TICKET_MESSAGE = "ticket:buy:message";
+
 
     @GetMapping("/clickRob/{sceneId}/{managerId}")
     public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable Integer managerId) throws ParseException {
@@ -43,13 +62,14 @@ public class ClickController {
         String endPoint = "目前无活动，敬请期待";
         String end = "今天全部活动已经结束";
         String start = "活动还没有开始";
-        if (count == -1) {
-            synchronized (this) {
-                if (count == -1) {
-                    count = sceneService.selectById(sceneId).getSceneCount();
-                    System.out.println("总数为" + count);
-                }
-            }
+//        if (count == -1) {
+//            synchronized (this) {
+//                if (count == -1) {
+//                    count = sceneService.selectById(sceneId).getSceneCount();
+//                    System.out.println("总数为" + count);
+//                }
+//            }
+//        }
             //判断当前时间
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             //获取活动的结束时间
@@ -91,27 +111,44 @@ public class ClickController {
             } else if ((managerService.selectById(managerId).getManageIsgrab() == 0) && count > 0 && new Date().before(date) && new Date().after(sdf.parse(starttime))) {
                 //判断鑫管家有没有领到用户，等于0 表示可以抢用户
                 if (sceneService.selectById(sceneId).getSceneCount() > 0) {
-                    //沉默用户大于0 写抢的代码
-                    synchronized (this) {
-                        count--;
-                        if (count < 0) {
-                            return () -> GenericResponse.success("click666", "失败", noting);
+                    //获取锁
+                    String lockSign = redisLock.setLock(ROP_TICKET_LOCK, ROP_TICKET_LOCK_TIME_OUT);
+                    //获取当前时间
+                    Long oldTimeStamp = System.currentTimeMillis();
+                    while (true) {
+                        // 不为空则获取到锁
+                        if (StringUtils.isNotBlank(lockSign)) {
+                            if (count < 0) {
+                                return () -> GenericResponse.success("click666", "失败");
+                            }
+                            log.info("用户【{}】获取到锁");
+                            count--;
+                            log.info("用户【{}】抢票成功！票量剩余：【{}】张");
+                            //更改管家领取用户的状态
+                            managerService.updateManageByManageId(managerId);
+                            System.out.println("已经抢走一个用户，还剩" + count);
+                            redisLock.releaseLock(ROP_TICKET_LOCK, lockSign);
+                            return () -> GenericResponse.success("click666", "成功", success);
                         }
-                        //更改管家领取用户的状态
-                        managerService.updateManageByManageId(managerId);
-                        System.out.println("已经抢走一个用户，还剩" + count);
-                        return () -> GenericResponse.success("click666", "成功", success);
+                        Long nowTimeStamp = System.currentTimeMillis();
+                        // 操作是否超时
+                        boolean workContinue = (nowTimeStamp - oldTimeStamp) > ROP_TICKET_LOCK_GET_TIME_OUT;
+                        if (workContinue) {
+                            log.error("用户操作超时");
+                            break;
+                        }
                     }
+
+                } else if (managerService.selectById(managerId).getManageIsgrab() == 1) {
+                    //表示==1 鑫管家已经领过一次了，
+                    System.out.println("已经参加活动");
+                    return () -> GenericResponse.success("click", "已经参加过一次活动", joined);
+                } else {
+                    return () -> GenericResponse.success("click", "活动还没有开始", start);
                 }
-            } else if (managerService.selectById(managerId).getManageIsgrab() == 1) {
-                //表示==1 鑫管家已经领过一次了，
-                System.out.println("已经参加活动");
-                return () -> GenericResponse.success("click", "已经参加过一次活动", joined);
-            } else {
-                return () -> GenericResponse.success("click", "活动还没有开始", start);
             }
 
-        }
+
         return null;
     }
 }

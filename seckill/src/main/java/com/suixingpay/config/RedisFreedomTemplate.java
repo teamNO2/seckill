@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -15,6 +16,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
  * @author: 文状
  * @create: 2019-12-09 14:38
  **/
+@Configuration
 public class RedisFreedomTemplate {
     //RedisTemplate默认采用的是JDK的序列化策略，保存的key和value都是采用此策略序列化保存的。
     //springboot封装了RedisTemplate对象来对redis进行各种操作

@@ -2,6 +2,9 @@ package com.suixingpay;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /*
  *@Author 孙克强
@@ -10,5 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StartApplication {
     public static void main(String[] args) {
         SpringApplication. run(StartApplication.class, args);
+    }
+    @Bean
+    @ConfigurationProperties(prefix = "thread.pool")
+    public ThreadPoolTaskExecutor getThreadPool() {
+        return new ThreadPoolTaskExecutor();
     }
 }
