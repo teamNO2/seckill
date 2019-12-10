@@ -23,4 +23,9 @@ public interface ManagerMessageService {
      */
     Silentuser searchUserInfo(Integer userId);
 
+    /**
+     * 张佳鑫
+     * 把鑫管家是否抢到沉默用户状态改变
+     */
+    int updateManageByManageIsgrab(Integer managerId);
 }
