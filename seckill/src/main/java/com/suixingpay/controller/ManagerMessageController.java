@@ -32,8 +32,8 @@ public class ManagerMessageController {
     @ApiOperation(value = "鑫管家查询已抢到所有用户模块",notes = "根据鑫管家id查询鑫管家抢到的所有用户通知")
     public Callable<GenericResponse> searchAllUserInfo(@PathVariable("managerId") String managerId1){
         String regex = "^[0-9]*[1-9][0-9]*$";
-        //把鑫管家是否抢到沉默用户状态改变
         if(managerId1.matches(regex)){
+            //把鑫管家是否抢到沉默用户状态改变
             Integer managerId  = Integer.valueOf(managerId1);
             List<Silentuser> allManager = managerMessageService.searchAllUserInfo(managerId);
             int i = managerMessageService.updateManageByManageIsgrab(managerId);
