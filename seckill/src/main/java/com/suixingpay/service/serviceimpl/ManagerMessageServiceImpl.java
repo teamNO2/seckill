@@ -1,6 +1,7 @@
 package com.suixingpay.service.serviceimpl;
 
 import com.suixingpay.entity.Silentuser;
+import com.suixingpay.repository.ManagerRepository;
 import com.suixingpay.repository.SilentuserRepository;
 import com.suixingpay.service.ManagerMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class ManagerMessageServiceImpl implements ManagerMessageService {
     @Autowired
     private SilentuserRepository silentuserRepository;
 
+    @Autowired
+    private ManagerRepository managerRepository;
+
     /**
      * 张佳鑫
      * 查询鑫管家抢到的所有用户通知
@@ -35,5 +39,14 @@ public class ManagerMessageServiceImpl implements ManagerMessageService {
     @Override
     public Silentuser searchUserInfo(Integer userId) {
         return silentuserRepository.selectById(String.valueOf(userId));
+    }
+
+    /**
+     * 张佳鑫
+     * 把鑫管家是否抢到沉默用户状态改变
+     */
+    @Override
+    public int updateManageByManageIsgrab(Integer managerId) {
+        return managerRepository.updateManageByManageId2(managerId);
     }
 }
