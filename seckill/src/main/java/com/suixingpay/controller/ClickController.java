@@ -41,14 +41,17 @@ public class ClickController{
         String joined="您已成功参与本次活动";
         String success="已成功参与本次活动";
         String windows="“恭喜您成功参加此次秒杀活动，待活动结束后，去意向客户查看您的用户信息，并请于 3 内完成拓展";
+
         if (count == 0) {
-            count =sceneService.selectById(sceneId).getSceneCount() ;
+            count =sceneService.selectById(sceneId).getSceneCount();
         }
         //判断当前时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String today = sdf.format(new Date());
         //Integer date = Integer.valueOf(String.valueOf(today));
         Long date = Long.valueOf(today);
+
+
         //判断活动是否结束
         if (date > Long.valueOf(sceneService.selectById(sceneId).getSceneEndtime())) {
             System.out.println("活动结束");
@@ -60,20 +63,18 @@ public class ClickController{
                 //沉默用户大于0 写抢的代码
                 count--;
                 managerService.updateManageByManageId(managerId);
-                System.out.println("已经抢走一个用户，还剩"+count);
+                //System.out.println("已经抢走一个用户，还剩"+count);
                 return () -> GenericResponse.success("click666", "你", success);
             } else {
-                System.out.println("沉默用户没了");
+                //System.out.println("沉默用户没了");
                 return () -> GenericResponse.success("click666", "沉默用户没了", noting);
 
             }
         } else if (managerService.selectById(managerId).getManageIsgrab() == 1) {
             //表示==1 鑫管家已经领过一次了，
-            System.out.println("已经参加过一次活动");
+            //System.out.println("已经参加过一次活动");
             return () -> GenericResponse.success("click", "已经参加过一次活动", joined);
-
         }
         return null;
     }
-
 }
