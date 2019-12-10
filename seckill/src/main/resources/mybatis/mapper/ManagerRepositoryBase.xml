@@ -306,7 +306,10 @@
         select <include refid="Base_Column_List" /> from `manager` where `manage_name` = #{manageName} and `manage_password` = #{managePassword}
     </select>
 
-    <!--张佳鑫：把鑫管家是否抢到沉默用户状态改变-->
+    <!--
+         张佳鑫
+         把鑫管家是否抢到沉默用户状态改变
+    -->
     <update id="updateManageByManageId2"  parameterType="java.lang.Integer">
         update `manager` set
         `manage_isgrab` = 0
