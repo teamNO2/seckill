@@ -36,4 +36,4 @@ public class Manager {
     private String manageProvince;
     /** 鑫管家是否抢到沉默用户0:没抢到，1：抢到 **/
     private Integer manageIsgrab;
-}
+        }
