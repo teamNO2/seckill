@@ -159,13 +159,6 @@
         where `user_id` = #{userId,jdbcType=INTEGER}
     </select>
 
-    <select id="selectByManagerId" parameterType="java.lang.String" resultMap="BaseResultMap" >
-        select
-        <include refid="Base_Column_List" />
-        from  `silentuser`
-        where `manage_id` = #{manageId,jdbcType=INTEGER}
-    </select>
-
 
     <sql id="findPageWithWhere" >
         <where> 1=1
@@ -472,5 +465,16 @@
     <update id="updateSilentuserIsbyebye" parameterType="com.suixingpay.entity.Silentuser">
         update `silentuser` set `user_isbyebye`=1 where `user_id`=#{userId}
     </update>
+
+    <!--
+         张佳鑫
+         查询鑫管家抢到的所有用户通知
+    -->
+    <select id="selectByManagerId" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `silentuser`
+        where `manage_id` = #{manageId,jdbcType=INTEGER}
+    </select>
 
 </mapper>
