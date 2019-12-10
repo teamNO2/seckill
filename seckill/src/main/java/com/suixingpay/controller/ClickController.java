@@ -41,6 +41,8 @@ public class ClickController {
         String nextscenestart = "下一场活动时间为：";
         String next = "您的归属地不在下一场活动开放范围内，请期待后续活动";
         String endPoint = "目前无活动，敬请期待";
+        String end = "今天全部活动已经结束";
+        String start = "活动还没有开始";
         if (count == -1) {
             synchronized (this) {
                 if (count == -1) {
@@ -48,12 +50,6 @@ public class ClickController {
                     System.out.println("总数为" + count);
                 }
             }
-            String end = "今天全部活动已经结束";
-            String start = "活动还没有开始";
-            if (count == -1) {
-                count = sceneService.selectById(sceneId).getSceneCount();
-            }
-
             //判断当前时间
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             //获取活动的结束时间
@@ -64,10 +60,8 @@ public class ClickController {
             Date date = null;
             date = sdf.parse(s);//数据库中的活动结束时间
 
-
             //判断活动是否结束  当前时间是否在活动结束时间之后
             if (new Date().after(date)) {
-
                 //如果这次活动下面没有活动了 返回目前没有活动
                 if (sceneService.selectById(sceneId + 1) == null) {
                     return () -> GenericResponse.success("selectById666", "活动结束", end);
@@ -94,7 +88,7 @@ public class ClickController {
                     return () -> GenericResponse.success("selectById666", "活动结束", endPoint);
                 }
 
-            } else if ((managerService.selectById(managerId).getManageIsgrab() == 0) && count > 0) {
+            } else if ((managerService.selectById(managerId).getManageIsgrab() == 0) && count > 0 && new Date().before(date) && new Date().after(sdf.parse(starttime))) {
                 //判断鑫管家有没有领到用户，等于0 表示可以抢用户
                 if (sceneService.selectById(sceneId).getSceneCount() > 0) {
                     //沉默用户大于0 写抢的代码
@@ -116,7 +110,8 @@ public class ClickController {
             } else {
                 return () -> GenericResponse.success("click", "活动还没有开始", start);
             }
+
         }
-            return null;
-        }
+        return null;
     }
+}

@@ -6,6 +6,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://www.wzdnnn.com:3306/seckill?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
+
 mybatis:
   #指定全局配置文件的位置
   config-location: classpath:mybatis/mybatis-config.xml
@@ -22,3 +23,20 @@ swagger:
   name: 第二组
   url: https://www.vbill.cn/
   email: 1830716357@qq.com
+
+thread:
+  pool:
+
+---
+spring:
+  profiles: dev
+  redis:
+    host: 49.234.104.184
+    database: 1
+    port: 6379
+
+    pool:
+      max-active: 2000
+      max-idle: 8
+      max-wait: -1
+      min-idle: 2
