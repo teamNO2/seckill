@@ -32,4 +32,8 @@ public interface SceneRepository {
     //按id查询活动
     Scene selectById(String id);
 
+
+    //记录每次活动未被认领的沉默用户数量
+    int updateUnallocated(int scene_unallocated,int scene_id);
+
 }

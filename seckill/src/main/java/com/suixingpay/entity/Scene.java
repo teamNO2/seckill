@@ -38,4 +38,6 @@ public class Scene {
     private String sceneProvince;
     /** 沉默用户数量 **/
     private Integer sceneCount;
+    /** 未分配沉默用户数量 **/
+    private Integer sceneUnallocated;
 }
