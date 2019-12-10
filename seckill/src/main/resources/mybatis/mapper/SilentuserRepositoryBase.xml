@@ -437,10 +437,11 @@
         from `silentuser`
         <include refid="findPageWithWhereLike" />
     </select>
+
     <!--
-            柴宇航
-            查询出参加活动的用户
-     -->
+         柴宇航
+         查询出参加活动的用户
+  -->
     <select id="selectSilentuser" resultType="com.suixingpay.entity.Silentuser">
         select `user_id`,`user_name`,`user_tel`,`user_sex`,`user_address`,`user_time`
         from `silentuser`
@@ -453,7 +454,7 @@
     <select id="selectManager" resultType="com.suixingpay.entity.Manager">
         select `manage_id`,`manage_name`
         from `manager`
-        where `manage_isgrab` = 1
+        where `manage_isgrab` = 1 and `manage_province`=#{manageProvince}
     </select>
 
     <!--
@@ -471,6 +472,5 @@
     <update id="updateSilentuserIsbyebye" parameterType="com.suixingpay.entity.Silentuser">
         update `silentuser` set `user_isbyebye`=1 where `user_id`=#{userId}
     </update>
+
 </mapper>
-
-
