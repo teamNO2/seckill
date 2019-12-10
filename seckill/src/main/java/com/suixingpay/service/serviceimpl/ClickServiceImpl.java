@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  * @Date 2019 年 12 月 8 日 0008 17:32:25
  * @Version 1.0
  */
+
 @Service
 public class ClickServiceImpl implements ClickService {
     @Autowired
