@@ -39,4 +39,7 @@ public interface ManagerRepository {
 
     //鑫管家登录
     Manager selectManagerByNameAndPassword(Manager manager);
+
+
+    int updateManageByManageId2(Integer managerId);
 }
