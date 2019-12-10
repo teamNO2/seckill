@@ -22,6 +22,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc //必须存在
 @Data  //lomlok
 //必须存在 扫描的API Controller包
+//哈哈
 @ComponentScan(basePackages = {"com.suixingpay.controller"})
 public class SwaggerConfig {
 
