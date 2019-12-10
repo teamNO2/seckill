@@ -40,6 +40,9 @@ public interface ManagerRepository {
     //鑫管家登录
     Manager selectManagerByNameAndPassword(Manager manager);
 
-
+    /*
+     * 张佳鑫
+     * 修改鑫管家状态从1变成0
+     */
     int updateManageByManageId2(Integer managerId);
 }
