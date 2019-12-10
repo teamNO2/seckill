@@ -22,7 +22,7 @@ public interface SilentuserService {
      * @Author:柴宇航
      * @根据user_id修改manag_id改成已被分配
      */
-    int updateManagerId(int manageId,int userId);
+    int updateManagerId(int manageId,String userTime,int userId);
 
     /**
      * @Author:柴宇航
