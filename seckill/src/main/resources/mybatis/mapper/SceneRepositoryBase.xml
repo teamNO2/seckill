@@ -13,7 +13,7 @@
 
 
     <sql id="Base_Column_List" >
-        `scene_id`,`scene_starttime`,`scene_endtime`,`scene_continurtime`,`scene_province`,`scene_count`
+        `scene_id`,`scene_starttime`,`scene_endtime`,`scene_continurtime`,`scene_province`,`scene_count`,`scene_unallocated`
     </sql>
 
 

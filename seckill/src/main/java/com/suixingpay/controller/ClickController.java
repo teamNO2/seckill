@@ -30,7 +30,7 @@ public class ClickController {
     @Autowired
     private SceneService sceneService;
 
-    private static int count = -1;
+    private volatile int count = -1;
 
     @GetMapping("/clickRob/{sceneId}/{managerId}")
     public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable Integer managerId) throws ParseException {
@@ -41,15 +41,25 @@ public class ClickController {
         String nextscenestart = "下一场活动时间为：";
         String next = "您的归属地不在下一场活动开放范围内，请期待后续活动";
         String endPoint = "目前无活动，敬请期待";
-        if (count == -1) {
-            count = sceneService.selectById(sceneId).getSceneCount();
+        if (count ==-1) {
+                    synchronized (this) {
+                        if (count == -1) {
+                            count = sceneService.selectById(sceneId).getSceneCount();
+                            System.out.println("总数为"+count);
+                        }
+            }
         }
+
         //判断当前时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //获取活动的结束时间
         String s = sceneService.selectById(sceneId).getSceneEndtime();
+        System.out.println(s);
         Date date = null;
         date = sdf.parse(s);//数据库中的活动结束时间
+
+
+
         //判断活动是否结束  当前时间是否在活动结束时间之后
         if (new Date().after(date)) {
             Scene sc=sceneService.selectById(sceneId);
@@ -72,18 +82,20 @@ public class ClickController {
                 return () -> GenericResponse.success("selectById666", "活动结束", endPoint);
             }
 
-        } else if (managerService.selectById(managerId).getManageIsgrab() == 0) {
+        } else if ((managerService.selectById(managerId).getManageIsgrab() == 0)&&count>0) {
             //判断鑫管家有没有领到用户，等于0 表示可以抢用户
             if (sceneService.selectById(sceneId).getSceneCount() > 0) {
                 //沉默用户大于0 写抢的代码
-                count--;
-                if(count<0){
-                    return () -> GenericResponse.success("click666", "失败", noting);
+                synchronized (this) {
+                    count--;
+                    if (count <0) {
+                        return () -> GenericResponse.success("click666", "失败", noting);
+                    }
+                    //更改管家领取用户的状态
+                    managerService.updateManageByManageId(managerId);
+                    System.out.println("已经抢走一个用户，还剩" + count);
+                    return () -> GenericResponse.success("click666", "成功", success);
                 }
-                //更改管家领取用户的状态
-                managerService.updateManageByManageId(managerId);
-                System.out.println("已经抢走一个用户，还剩" + count);
-                return () -> GenericResponse.success("click666", "成功", success);
             }
         } else if (managerService.selectById(managerId).getManageIsgrab() == 1) {
             //表示==1 鑫管家已经领过一次了，
