@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+/**
+ * @Author:柴宇航
+ * @柴宇航私有模块
+ */
 public class SilentuserServiceImpl implements SilentuserService {
     @Autowired
     private SilentuserRepository silentuserRepository;
     /**
-     * 柴宇航
-     * 查询出参与活动的沉默用户
+     * @Author:柴宇航
+     * @查询出参与活动的沉默用户
      * @return
      */
     public List<Silentuser> selectSilentuser(String userProvince){
@@ -23,8 +27,8 @@ public class SilentuserServiceImpl implements SilentuserService {
     }
 
     /**
-     * 柴宇航
-     * 查询出抢到沉默用户的鑫管家
+     * @Author:柴宇航
+     * @查询出抢到沉默用户的鑫管家
      * @return
      */
     public List<Manager> selectManager(String manageProvince){
@@ -32,8 +36,8 @@ public class SilentuserServiceImpl implements SilentuserService {
     }
 
     /**
-     * 柴宇航
-     * 根据user_id修改manage_id改成已被分配
+     * @Author:柴宇航
+     * @根据user_id修改manage_id改成已被分配
      * @param userId
      * @return
      */
@@ -42,8 +46,8 @@ public class SilentuserServiceImpl implements SilentuserService {
     }
 
     /**
-     * 柴宇航
-     * 根据user_id修改沉默用户为轮空
+     * @Author:柴宇航
+     * @根据user_id修改沉默用户为轮空
      * @param userId
      * @return
      */
