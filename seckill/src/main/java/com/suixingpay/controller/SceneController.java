@@ -1,10 +1,12 @@
 package com.suixingpay.controller;
 
 import com.suixingpay.entity.Scene;
+import com.suixingpay.entity.Silentuser;
 import com.suixingpay.service.SceneService;
 import com.suixingpay.utils.GenericResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import java.util.concurrent.Callable;
 /*
  *@Author 孙克强
  */
+@Slf4j
 @RestController
 @RequestMapping("/scene")
 @Api("秒杀活动配置模块")
@@ -90,6 +93,21 @@ public class SceneController {
             return () -> GenericResponse.success("selectById666", "查询成功", scene);
         } else {
             return () -> GenericResponse.failed("selectById999", "查询失败");
+        }
+    }
+
+    /*
+     * 张佳鑫
+     * 统计用户资源
+     */
+    @GetMapping("/userResource")
+    @ApiOperation(value = "用户资源统计",notes = "按省份统计沉默用户数和可参加用户")
+    public Callable<GenericResponse> selectUserResource(){
+        List<Silentuser> silentusers = sceneService.selectUserResource();
+        if (silentusers != null) {
+            return () -> GenericResponse.success("selectUserResource666", "查询成功", silentusers);
+        } else {
+            return () -> GenericResponse.failed("selectUserResource999", "查询失败");
         }
     }
 }
