@@ -30,10 +30,41 @@ public class SceneController {
     //新增活动---孙克强
     @PostMapping("/insertScene")
     @ApiOperation(value = "添加活动配置", notes = "添加秒杀活动配置")
-    public Callable<GenericResponse> insertScene(Scene scene) {
+    public Callable<GenericResponse> insertScene(Scene scene) throws ParseException {
         log.info("进入添加活动接口");
+        //时间格式
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //新添加活动的开始时间
+        Date newstarttime = format.parse(scene.getSceneStarttime());
+        //新添加活动的结束时间
+        Date newendtime = format.parse(scene.getSceneEndtime());
+        Date curDate = new Date();
+        if(newstarttime.compareTo(curDate) == -1){
+            log.info("添加失败，退出添加活动接口");
+            return () -> GenericResponse.failed("insertScene999", "添加失败，开始活动时间不能小于当前时间");
+        }
+        log.info("查询所有活动信息");
+        List<Scene> allScenes = sceneService.getAllScenes();
+        //没有已存在活动,可以添加
+        if (allScenes == null || allScenes.isEmpty()) {
+            sceneService.insertScene(scene);
+            log.info("添加成功，退出添加活动接口");
+            return () -> GenericResponse.success("insertScene666", "添加成功");
+        }
+        for (Scene sc : allScenes) {
+            //已存在活动的开始时间
+            Date oldStartTime = format.parse(sc.getSceneStarttime());
+            //已存在活动的结束时间
+            Date oldEndTime = format.parse(sc.getSceneEndtime());
+
+            //有时间交集，不可以添加
+            if (!(newstarttime.compareTo(newendtime) == -1 && newendtime.compareTo(oldStartTime) == -1 || newstarttime.compareTo(newendtime) == -1 && newstarttime.compareTo(oldEndTime) == 1)) {
+                log.info("添加失败，退出添加活动接口");
+                return () -> GenericResponse.failed("insertScene999", "添加失败，时间有冲突");
+            }
+        }
+        //没有时间冲突，可以添加
         int i = sceneService.insertScene(scene);
-        log.info("正在添加活动");
         if (i != 0) {
             log.info("添加成功，退出添加活动接口");
             return () -> GenericResponse.success("insertScene666", "添加成功");
