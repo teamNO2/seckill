@@ -41,12 +41,20 @@ public class SilentuserController {
     public Callable<GenericResponse> distributionSilentuser(@RequestParam("userProvince") String userProvince,
                                                             @RequestParam("sceneId") int id) {
         log.info("进入分配沉默用户的接口");
-        int index = 0; //记录未被分配的沉默用户
+
+        //记录未被分配的沉默用户
+        int index = 0;
+
         log.info("进入查询符合当前城市的沉默用户方法");
         List<Silentuser> silentusers = silentuserService.selectSilentuser(userProvince);
+
         log.info("进入查询符合当前城市的鑫管家");
         List<Manager> managers = silentuserService.selectManager(userProvince);
+
+        //初始化updateManagerId方法的返回修改数目
         int i=0;
+
+        //核心逻辑
         for (Silentuser s:silentusers) {
             if (!managers.isEmpty()) {
                 Manager manager = managers.get(managers.size() - 1);
@@ -57,11 +65,12 @@ public class SilentuserController {
                 log.info("进入修改沉默用户的分配时间，被分配的鑫管家ID，以及当前沉默用户的ID方法");
                 i=silentuserService.updateManagerId(manager.getManageId(), dateStr, s.getUserId());
             } else {
-                log.info("进去修改沉默用户是否被轮空的方法");
+                log.info("进入修改沉默用户是否被轮空的方法");
                 silentuserService.updateSilentuserIsbyebye(s.getUserId());
-                index++; //记录+1
+                index++;
             }
-            sceneService.updateUnallocated(index, id); //记录该id活动所对应的未分配沉默用户的数量
+            log.info("进入修改所对应的未分配沉默用户的数量的方法");
+            sceneService.updateUnallocated(index, id);
         }
         if(i!=0) {
             log.info("沉默用户分配成功");
