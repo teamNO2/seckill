@@ -40,7 +40,7 @@ public class ClickController {
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 
-    private static int count = 2;
+    private static int count = 200;
     // 锁名
     private static final String ROP_TICKET_LOCK = "tickets:lock";
     // 锁过期时间 30s
@@ -118,8 +118,9 @@ public class ClickController {
                     while (true) {
                         // 不为空则获取到锁
                         if (StringUtils.isNotBlank(lockSign)) {
-                            if (count < 0) {
-                                return () -> GenericResponse.success("click666", "失败");
+                            //再次判断沉默用户数量是否被抢完
+                            if (count <= 0) {
+                                return () -> GenericResponse.failed("click999", "失败");
                             }
                             log.info("用户【{}】获取到锁");
                             count--;

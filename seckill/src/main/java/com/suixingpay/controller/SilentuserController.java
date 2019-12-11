@@ -48,12 +48,13 @@ public class SilentuserController {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date=new Date();
                 String dateStr = simpleDateFormat.format(date);
+                System.out.println(manager.getManageId());
                 silentuserService.updateManagerId(manager.getManageId(),dateStr,s.getUserId());
             }else{
                 silentuserService.updateSilentuserIsbyebye(s.getUserId());
                 index++;//记录+1
             }
-            sceneService.updateUnallocated(index, id);//记录该id活动所对应的未分配沉默用户的数量
+            //sceneService.updateUnallocated(index, id);//记录该id活动所对应的未分配沉默用户的数量
         }
        return () -> GenericResponse.success("distributionSilentuser666", "分配成功");
     }

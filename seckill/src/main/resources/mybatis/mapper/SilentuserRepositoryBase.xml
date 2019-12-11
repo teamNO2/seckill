@@ -454,7 +454,7 @@
         柴宇航
         根据id修改manage_id改成已被分配
     -->
-    <update id="updateManagerId" parameterType="com.suixingpay.entity.Silentuser">
+    <update id="updateManagerId"  parameterType="com.suixingpay.entity.Silentuser">
         update `silentuser` set `manage_id`=#{manageId},`user_time`=#{userTime} where `user_id`=#{userId}
     </update>
 
