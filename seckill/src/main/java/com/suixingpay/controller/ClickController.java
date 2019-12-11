@@ -62,7 +62,7 @@ public class ClickController {
             date = sdf.parse(s);//数据库中的活动结束时间
 
         if (managerService.selectById(managerId).getManageProvince().equals(sceneService.selectById(sceneId).getSceneProvince())) {
-                //如果鑫管家和活动城市相同
+            //如果鑫管家和活动城市相同
             //判断活动是否结束  当前时间是否在活动结束时间之后
             if (new Date().after(date)) {
                 //如果这次活动下面没有活动了 返回目前没有活动
