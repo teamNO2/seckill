@@ -3,6 +3,7 @@ package com.suixingpay.service;
 import com.suixingpay.entity.Manager;
 import com.suixingpay.utils.GenericResponse;
 
+import java.text.ParseException;
 import java.util.concurrent.Callable;
 
 /**
@@ -14,4 +15,7 @@ import java.util.concurrent.Callable;
  */
 public interface ClickService {
   Manager Click(Integer managerId);
+
+
+  Callable<GenericResponse> clickRob(Integer sceneId, Integer managerId)throws ParseException;
 }
