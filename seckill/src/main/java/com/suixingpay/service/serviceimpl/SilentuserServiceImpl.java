@@ -42,8 +42,8 @@ public class SilentuserServiceImpl implements SilentuserService {
      * @param userId
      * @return
      */
-    public int updateManagerId(int manageId,int userId){
-        return silentuserRepository.updateManagerId(manageId,userId);
+    public int updateManagerId(int manageId,String userTime,int userId){
+        return silentuserRepository.updateManagerId(manageId,userTime,userId);
     }
 
     /**
