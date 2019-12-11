@@ -46,4 +46,8 @@ public class Silentuser{
     private Integer userIsbyebye;
     /** 省份表 **/
     private String userProvince;
+    /** 沉默用户数量 **/
+    private Integer countIsWhite;
+    /** 可参加用户数量 **/
+    private Integer countManagerId;
 }
