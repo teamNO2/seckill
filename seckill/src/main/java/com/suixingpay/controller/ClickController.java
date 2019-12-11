@@ -4,6 +4,7 @@ import com.suixingpay.entity.Scene;
 import com.suixingpay.service.ManagerService;
 import com.suixingpay.service.SceneService;
 import com.suixingpay.utils.GenericResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import java.util.concurrent.Callable;
  */
 @RestController
 @RequestMapping("/click")
+@Slf4j
 public class ClickController {
     @Autowired
     private ManagerService managerService;
@@ -49,9 +51,8 @@ public class ClickController {
         synchronized (this) {
             if (count == -1) {
                 count = sceneService.selectById(sceneId).getSceneCount();
-                System.out.println("总数为" + count);
+                log.info("总数为" + count);
             }
-
             //判断当前时间
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             //获取活动的结束时间
@@ -78,7 +79,7 @@ public class ClickController {
                     //下一场的的城市跟鑫管家的所在城市是否在一个地方
                     if (managerService.selectById(managerId).getManageProvince().equals(sceneService.selectById((sceneId + 1)).getSceneProvince())) {
                         String nextstarttime = sceneService.selectById((sceneId + 1)).getSceneStarttime();
-                        System.out.println(nextstarttime);
+                        log.info("下一场活动时间为："+nextstarttime);
                         //下一场活动时间为：
                         return () -> GenericResponse.success("selectById666", "活动结束", nextscenestart + nextstarttime + "敬请期待");
                     } else {
@@ -91,7 +92,6 @@ public class ClickController {
                 }
 
             } else if (managerService.selectById(managerId).getManageIsgrab() == 0 && count > 0 && new Date().before(date) && new Date().after(sdf.parse(starttime))) {
-
                     if (sceneService.selectById(sceneId).getSceneCount() > 0) {
                         //沉默用户大于0 写抢的代码
                         synchronized (this) {
@@ -101,7 +101,7 @@ public class ClickController {
                             }
                             //更改管家领取用户的状态
                             managerService.updateManageByManageId(managerId);
-                            System.out.println("已经抢走一个用户，还剩" + count);
+                            log.info(managerId+"已经抢走一个用户，还剩" + count);
                             return () -> GenericResponse.success("click666", "成功", success);
                         }
                     } else {
@@ -110,7 +110,7 @@ public class ClickController {
                     }
             } else if (managerService.selectById(managerId).getManageIsgrab() == 1) {
                 //表示==1 鑫管家已经领过一次了，
-                System.out.println("已经参加活动");
+                log.info(managerId+"已经参加活动");
                 return () -> GenericResponse.success("click", "已经参加过一次活动", joined);
             } else {
                 return () -> GenericResponse.success("click", "活动还没有开始", start);
