@@ -116,7 +116,7 @@ public class ClickController {
                 return () -> GenericResponse.success("click", "活动还没有开始", start);
             }
         } else {
-            return () -> GenericResponse.success("click", "归属地不在活动范围内", different);
+            return () ->  GenericResponse.success("click", "归属地不在活动范围内", different);
         }
         }
     }
