@@ -35,7 +35,7 @@ public class ClickController {
     private static int count = -1;
 
     @GetMapping("/clickRob/{sceneId}/{managerId}")
-    public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable("managerId") Integer managerId) throws ParseException {
+    public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable Integer managerId) throws ParseException {
 
         String noting = "今日用户已经被抢完，请留意后续活动";
         String joined = "已经参加活动，请等待结果公布";

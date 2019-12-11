@@ -477,4 +477,19 @@
         where `manage_id` = #{manageId,jdbcType=INTEGER}
     </select>
 
+    <resultMap id="ResourceMap" type="com.suixingpay.entity.Silentuser" >
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_province" property="userProvince" jdbcType="VARCHAR" />
+        <result column="countIsWhite" property="countIsWhite" jdbcType="INTEGER" />
+        <result column="countManagerId" property="countManagerId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!--
+         张佳鑫
+         用户资源统计
+    -->
+    <select id="selectUserResource" resultMap="ResourceMap" >
+        SELECT `user_province`,sum(if(`user_iswhite` = 0,1,0)) as countIsWhite,sum(if(`user_iswhite` = 0 and `manage_id` = 0,1,0)) as countManagerId  from `silentuser`  GROUP BY `user_province`;
+    </select>
+
 </mapper>

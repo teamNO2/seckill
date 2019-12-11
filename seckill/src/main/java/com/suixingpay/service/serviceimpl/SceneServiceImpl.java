@@ -1,16 +1,15 @@
 package com.suixingpay.service.serviceimpl;
 
 import com.suixingpay.entity.Scene;
+import com.suixingpay.entity.Silentuser;
 import com.suixingpay.repository.SceneRepository;
+import com.suixingpay.repository.SilentuserRepository;
 import com.suixingpay.service.SceneService;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import javax.xml.crypto.Data;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +23,9 @@ import java.util.List;
 public class SceneServiceImpl implements SceneService {
     @Autowired
     private SceneRepository sceneRepository;
+
+    @Autowired
+    private SilentuserRepository silentuserRepository;
 
     @Override
     public int insertScene(Scene scene) {
@@ -119,6 +121,15 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public int updateUnallocated(int sceneUnallocated, int sceneId) {
         return sceneRepository.updateUnallocated(sceneUnallocated,sceneId);
+    }
+
+    /*
+     * 张佳鑫
+     * 统计用户资源
+     */
+    @Override
+    public List<Silentuser> selectUserResource() {
+        return silentuserRepository.selectUserResource();
     }
 
 }

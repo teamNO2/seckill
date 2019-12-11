@@ -1,6 +1,7 @@
 package com.suixingpay.controller;
 
 import com.suixingpay.entity.Scene;
+import com.suixingpay.entity.Silentuser;
 import com.suixingpay.service.SceneService;
 import com.suixingpay.utils.GenericResponse;
 import io.swagger.annotations.Api;
@@ -19,6 +20,7 @@ import java.util.concurrent.Callable;
 /*
  *@Author 孙克强
  */
+@Slf4j
 @RestController
 @RequestMapping("/scene")
 @Api("秒杀活动配置模块")
@@ -30,10 +32,41 @@ public class SceneController {
     //新增活动---孙克强
     @PostMapping("/insertScene")
     @ApiOperation(value = "添加活动配置", notes = "添加秒杀活动配置")
-    public Callable<GenericResponse> insertScene(Scene scene) {
+    public Callable<GenericResponse> insertScene(Scene scene) throws ParseException {
         log.info("进入添加活动接口");
+        //时间格式
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //新添加活动的开始时间
+        Date newstarttime = format.parse(scene.getSceneStarttime());
+        //新添加活动的结束时间
+        Date newendtime = format.parse(scene.getSceneEndtime());
+        Date curDate = new Date();
+        if(newstarttime.compareTo(curDate) == -1){
+            log.info("添加失败，退出添加活动接口");
+            return () -> GenericResponse.failed("insertScene999", "添加失败，开始活动时间不能小于当前时间");
+        }
+        log.info("查询所有活动信息");
+        List<Scene> allScenes = sceneService.getAllScenes();
+        //没有已存在活动,可以添加
+        if (allScenes == null || allScenes.isEmpty()) {
+            sceneService.insertScene(scene);
+            log.info("添加成功，退出添加活动接口");
+            return () -> GenericResponse.success("insertScene666", "添加成功");
+        }
+        for (Scene sc : allScenes) {
+            //已存在活动的开始时间
+            Date oldStartTime = format.parse(sc.getSceneStarttime());
+            //已存在活动的结束时间
+            Date oldEndTime = format.parse(sc.getSceneEndtime());
+
+            //有时间交集，不可以添加
+            if (!(newstarttime.compareTo(newendtime) == -1 && newendtime.compareTo(oldStartTime) == -1 || newstarttime.compareTo(newendtime) == -1 && newstarttime.compareTo(oldEndTime) == 1)) {
+                log.info("添加失败，退出添加活动接口");
+                return () -> GenericResponse.failed("insertScene999", "添加失败，时间有冲突");
+            }
+        }
+        //没有时间冲突，可以添加
         int i = sceneService.insertScene(scene);
-        log.info("正在添加活动");
         if (i != 0) {
             log.info("添加成功，退出添加活动接口");
             return () -> GenericResponse.success("insertScene666", "添加成功");
@@ -143,6 +176,21 @@ public class SceneController {
             return () -> GenericResponse.success("selectById666", "查询成功", scene);
         } else {
             return () -> GenericResponse.failed("selectById999", "查询失败");
+        }
+    }
+
+    /*
+     * 张佳鑫
+     * 统计用户资源
+     */
+    @GetMapping("/userResource")
+    @ApiOperation(value = "用户资源统计",notes = "按省份统计沉默用户数和可参加用户")
+    public Callable<GenericResponse> selectUserResource(){
+        List<Silentuser> silentusers = sceneService.selectUserResource();
+        if (silentusers != null) {
+            return () -> GenericResponse.success("selectUserResource666", "查询成功", silentusers);
+        } else {
+            return () -> GenericResponse.failed("selectUserResource999", "查询失败");
         }
     }
 }
