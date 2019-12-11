@@ -33,7 +33,7 @@ public class ClickController {
     private static int count = -1;
 
     @GetMapping("/clickRob/{sceneId}/{managerId}")
-    public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable Integer managerId) throws ParseException {
+    public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable("managerId") Integer managerId) throws ParseException {
 
         String noting = "今日用户已经被抢完，请留意后续活动";
         String joined = "已经参加活动，请等待结果公布";
@@ -43,13 +43,11 @@ public class ClickController {
         String endPoint = "目前无活动，敬请期待";
         String end = "今天全部活动已经结束";
         String start = "活动还没有开始";
-        if (count == -1) {
             synchronized (this) {
                 if (count == -1) {
                     count = sceneService.selectById(sceneId).getSceneCount();
                     System.out.println("总数为" + count);
                 }
-            }
             //判断当前时间
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             //获取活动的结束时间
