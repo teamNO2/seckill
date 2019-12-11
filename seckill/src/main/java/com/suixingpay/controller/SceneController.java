@@ -80,7 +80,9 @@ public class SceneController {
             }
         }
         if (allScenes != null) {
-            return () -> GenericResponse.success("getNoStartScenes666", "查询成功", noStartScenes);
+            Date date = new Date();
+            String str = format.format(date);
+            return () -> GenericResponse.success(str, "查询成功", noStartScenes);
         } else {
             return () -> GenericResponse.failed("getNoStartScenes999", "查询失败");
         }
