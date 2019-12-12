@@ -326,7 +326,13 @@
         update `scene` set `scene_unallocated`=#{scene_unallocated} where `scene_id`=#{scene_id}
     </update>
 
-
+    <!--
+    张佳鑫
+    查询数据库中比当前时间小的最大时间
+    -->
+    <select id="selectEndTime" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select `scene_id` from `scene` where `scene_endtime` &lt; #{sceneEndTime} order by scene_endtime desc limit 1
+    </select>
 
 
 
