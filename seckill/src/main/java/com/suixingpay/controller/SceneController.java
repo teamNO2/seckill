@@ -20,7 +20,6 @@ import java.util.concurrent.Callable;
 /*
  *@Author 孙克强
  */
-@Slf4j
 @RestController
 @RequestMapping("/scene")
 @Api("秒杀活动配置模块")
@@ -186,7 +185,10 @@ public class SceneController {
     @GetMapping("/userResource")
     @ApiOperation(value = "用户资源统计",notes = "按省份统计沉默用户数和可参加用户")
     public Callable<GenericResponse> selectUserResource(){
-        List<Silentuser> silentusers = sceneService.selectUserResource();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String dateStr = simpleDateFormat.format(date);
+        List<Silentuser> silentusers = sceneService.selectUserResource(dateStr);
         if (silentusers != null) {
             return () -> GenericResponse.success("selectUserResource666", "查询成功", silentusers);
         } else {
