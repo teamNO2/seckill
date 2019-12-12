@@ -43,7 +43,6 @@ public class SceneServiceImpl implements SceneService {
     }
 
 
-
     /**
      * @Description: 根据时间查找活动
      * @Param: [time]
@@ -55,16 +54,16 @@ public class SceneServiceImpl implements SceneService {
     public Scene selectSceneByTime(String time) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date needTime = null;
-        Date startTime= null;
-        Date endTime= null;
+        Date startTime = null;
+        Date endTime = null;
         int index = 0;//给定一个查询标识
         try {
-             needTime = format.parse(time);
+            needTime = format.parse(time);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         List<Scene> scenes = this.getAllScenes();
-        for (Scene scene:scenes) {
+        for (Scene scene : scenes) {
             try {
                 startTime = format.parse(scene.getSceneStarttime());
                 endTime = format.parse(scene.getSceneEndtime());
@@ -81,7 +80,7 @@ public class SceneServiceImpl implements SceneService {
                     log.info("查询成功");
                     return scene;
                 }
-                if (!(needTime.before(startTime))&&(!needTime.after(startTime))){
+                if (!(needTime.before(startTime)) && (!needTime.after(startTime))) {
                     index = 1;
                     log.info("查询成功");
                     return scene;
@@ -89,7 +88,7 @@ public class SceneServiceImpl implements SceneService {
             }
         }
         //判断标识是否改变
-        if(index == 0){
+        if (index == 0) {
             log.debug("您查询的时间没有活动进行");
         }
         return null;
@@ -120,7 +119,7 @@ public class SceneServiceImpl implements SceneService {
      */
     @Override
     public int updateUnallocated(int sceneUnallocated, int sceneId) {
-        return sceneRepository.updateUnallocated(sceneUnallocated,sceneId);
+        return sceneRepository.updateUnallocated(sceneUnallocated, sceneId);
     }
 
     /*
@@ -130,6 +129,11 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public List<Silentuser> selectUserResource() {
         return silentuserRepository.selectUserResource();
+    }
+
+    @Override
+    public int findCountCanUse(String curProvince, String curDate) {
+        return sceneRepository.findCountCanUse(curProvince, curDate);
     }
 
 }

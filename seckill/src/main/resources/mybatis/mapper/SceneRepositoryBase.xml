@@ -316,7 +316,7 @@
     </select>
 
 
-    <!-- 查询所有活动 -->
+    <!-- 查询所有活动      孙克强-->
     <select id="getAllScenes" resultType="com.suixingpay.entity.Scene">
         select <include refid="Base_Column_List" /> from `scene`
     </select>
@@ -325,7 +325,18 @@
     <update id="updateUnallocated" parameterType="com.suixingpay.entity.Scene">
         update `scene` set `scene_unallocated`=#{scene_unallocated} where `scene_id`=#{scene_id}
     </update>
-
+    
+    
+    <!-- 查询当前省份可用的沉默用户数     孙克强-->
+    <select id="findCountCanUse" parameterType="java.lang.String" resultType="int">
+        SELECT (
+                (SELECT COUNT(*) FROM `silentuser` WHERE `user_province` = #{curProvince} AND `manage_id` = 0)
+                 -
+                 (SELECT COUNT(*) FROM `silentuser` WHERE `user_iswhite` = 1 AND `user_province` = #{curProvince})
+                 -
+                (SELECT IFNULL(SUM(`scene_count`),0) FROM `scene` WHERE `scene_province` = #{curProvince} AND `scene_endtime` > #{curDate})
+             ) AS aaa
+    </select>
 
 
 
