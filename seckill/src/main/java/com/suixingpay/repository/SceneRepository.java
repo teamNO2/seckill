@@ -9,6 +9,7 @@
 package com.suixingpay.repository;
 
 import com.suixingpay.entity.Scene;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -36,4 +37,5 @@ public interface SceneRepository {
     //记录每次活动未被认领的沉默用户数量
     int updateUnallocated(int scene_unallocated,int scene_id);
 
+    Integer selectEndTime(String sceneEndTime);
 }
