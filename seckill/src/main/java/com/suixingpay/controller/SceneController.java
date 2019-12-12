@@ -23,7 +23,6 @@ import java.util.concurrent.Callable;
 @RestController
 @RequestMapping("/scene")
 @Api("秒杀活动配置模块")
-@Slf4j
 public class SceneController {
     @Autowired
     private SceneService sceneService;
@@ -40,6 +39,7 @@ public class SceneController {
         //新添加活动的结束时间
         Date newendtime = format.parse(scene.getSceneEndtime());
         Date curDate = new Date();
+        //新添加活动时间如果比当前时间小
         if(newstarttime.compareTo(curDate) == -1){
             log.info("添加失败，退出添加活动接口");
             return () -> GenericResponse.failed("insertScene999", "添加失败，开始活动时间不能小于当前时间");
@@ -195,4 +195,29 @@ public class SceneController {
             return () -> GenericResponse.failed("selectUserResource999", "查询失败");
         }
     }
+
+
+
+
+    /**
+     * @Description: 判定状态
+     * @Param: []
+     * @return: java.util.List<com.suixingpay.entity.Scene>
+     * @Author: lichanghao
+     * @Date: 2019/12/12
+     */
+    @GetMapping("/judgeState1")
+    public List<Scene> judgeStateByTime1()throws Exception{
+        return sceneService.judgeStateByTime1();
+    }
+    @GetMapping("/judgeState2")
+    public List<Scene> judgeStateByTime2()throws Exception{
+        return sceneService.judgeStateByTime2();
+    }
+    @GetMapping("/judgeState3")
+    public List<Scene> judgeStateByTime3()throws Exception{
+        return sceneService.judgeStateByTime3();
+    }
+
+
 }

@@ -6,6 +6,7 @@ import com.suixingpay.repository.SceneRepository;
 import com.suixingpay.repository.SilentuserRepository;
 import com.suixingpay.service.SceneService;
 import io.swagger.models.auth.In;
+import com.suixingpay.utils.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /*
  *@Author sunkeqiang
@@ -56,16 +59,16 @@ public class SceneServiceImpl implements SceneService {
     public Scene selectSceneByTime(String time) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date needTime = null;
-        Date startTime= null;
-        Date endTime= null;
+        Date startTime = null;
+        Date endTime = null;
         int index = 0;//给定一个查询标识
         try {
-             needTime = format.parse(time);
+            needTime = format.parse(time);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         List<Scene> scenes = this.getAllScenes();
-        for (Scene scene:scenes) {
+        for (Scene scene : scenes) {
             try {
                 startTime = format.parse(scene.getSceneStarttime());
                 endTime = format.parse(scene.getSceneEndtime());
@@ -82,7 +85,7 @@ public class SceneServiceImpl implements SceneService {
                     log.info("查询成功");
                     return scene;
                 }
-                if (!(needTime.before(startTime))&&(!needTime.after(startTime))){
+                if (!(needTime.before(startTime)) && (!needTime.after(startTime))) {
                     index = 1;
                     log.info("查询成功");
                     return scene;
@@ -90,7 +93,7 @@ public class SceneServiceImpl implements SceneService {
             }
         }
         //判断标识是否改变
-        if(index == 0){
+        if (index == 0) {
             log.debug("您查询的时间没有活动进行");
         }
         return null;
@@ -121,7 +124,7 @@ public class SceneServiceImpl implements SceneService {
      */
     @Override
     public int updateUnallocated(int sceneUnallocated, int sceneId) {
-        return sceneRepository.updateUnallocated(sceneUnallocated,sceneId);
+        return sceneRepository.updateUnallocated(sceneUnallocated, sceneId);
     }
 
     /*
@@ -138,4 +141,61 @@ public class SceneServiceImpl implements SceneService {
         return sceneRepository.selectEndTime(sceneEndTime);
     }
 
+    /*
+     * 李常昊
+     * 未开始
+     */
+    @Override
+    public List<Scene> judgeStateByTime1() throws Exception {
+        List<Scene> scenes = sceneRepository.getAllScenes();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Scene> scenes1 = new ArrayList<>();
+        for (Scene scene : scenes) {
+            Date startTime = format.parse(scene.getSceneStarttime());
+            if (startTime.after(new Date())) {
+                scenes1.add(scene);
+            }
+        }
+        return scenes1;
+    }
+    /*
+     * 李常昊
+     * 正在进行
+     */
+
+    @Override
+    public List<Scene> judgeStateByTime2() throws Exception {
+        List<Scene> scenes = sceneRepository.getAllScenes();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Scene> scenes1 = new ArrayList<>();
+        for (Scene scene : scenes) {
+            Date startTime = format.parse(scene.getSceneStarttime());
+            Date endTime = format.parse(scene.getSceneEndtime());
+            if (startTime.before(new Date()) && endTime.after(new Date())) {
+                scenes1.add(scene);
+            }
+        }
+        return scenes1;
+    }
+
+    /*
+     * 李常昊
+     * 已结束
+     */
+    @Override
+    public List<Scene> judgeStateByTime3() throws Exception {
+        List<Scene> scenes = sceneRepository.getAllScenes();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Scene> scenes1 = new ArrayList<>();
+        for (Scene scene : scenes) {
+            Date startTime = format.parse(scene.getSceneStarttime());
+            Date endTime = format.parse(scene.getSceneEndtime());
+            if (endTime.before(new Date())) {
+                scenes1.add(scene);
+            }
+        }
+        return scenes1;
+    }
 }
+
+

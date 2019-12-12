@@ -5,8 +5,12 @@ import com.suixingpay.service.SceneService;
 import com.suixingpay.service.serviceimpl.SceneServiceImpl;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.suixingpay.consumer.ClickConsumer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.servlet.annotation.WebListener;
 import javax.xml.crypto.Data;
@@ -39,7 +43,18 @@ public class StartApplication {
     }*/
 
     public static void main(String[] args) {
+
         //timer();
         SpringApplication. run(StartApplication.class, args);
     }
+    @Bean
+    @ConfigurationProperties(prefix = "thread.pool")
+    public ThreadPoolTaskExecutor getThreadPool() {
+        return new ThreadPoolTaskExecutor();
+    }
+    @Bean
+    public ClickConsumer getClickConsumer(){
+        return new ClickConsumer();
+    }
+
 }

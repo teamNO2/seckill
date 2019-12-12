@@ -3,8 +3,10 @@ package com.suixingpay.service;
 import com.suixingpay.entity.Scene;
 import com.suixingpay.entity.Silentuser;
 import io.swagger.models.auth.In;
+import com.suixingpay.utils.GenericResponse;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public interface SceneService {
     //新增活动
@@ -34,4 +36,14 @@ public interface SceneService {
      * 查询每场活动的结束时间
      */
     Integer selectEndTime(String sceneEndTime);
+    List<Silentuser> selectUserResource();
+
+    //根据状态判断活动状态未开始
+    List<Scene> judgeStateByTime1() throws Exception;
+
+    //根据状态判断活动状态正在进行
+    List<Scene> judgeStateByTime2()throws Exception;
+
+    //根据状态判断活动状态已结束
+    List<Scene> judgeStateByTime3()throws Exception;
 }

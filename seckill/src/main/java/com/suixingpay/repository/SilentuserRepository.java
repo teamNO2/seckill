@@ -11,6 +11,7 @@ package com.suixingpay.repository;
 import com.suixingpay.entity.Manager;
 import com.suixingpay.entity.Silentuser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public interface SilentuserRepository {
      */
 
 
-    int updateManagerId(int manageId,String userTime,int userId);
+    int updateManagerId(@Param("manageId") int manageId,@Param("userTime")  String userTime,@Param("userId")  int userId);
 
     /**
      * @Author:柴宇航

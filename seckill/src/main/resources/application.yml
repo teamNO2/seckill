@@ -6,11 +6,34 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://www.wzdnnn.com:3306/seckill?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     type: com.alibaba.druid.pool.DruidDataSource
+
+  rabbitmq:
+      # MQ端口
+    host: www.wzdnnn.com
+    port: 5672
+    username: wz
+    password: 123456
+    listener:
+      simple:
+          # 消费者最小数量
+        concurrency: 1
+          # 消费者最大数量
+        max-concurrency: 10
+        # 是否自动确认信息
+        acknowledge-mode: auto
+        # 并发执行的最大数量
+        prefetch: 10
+      #  消息发送到交换机确认机制,是否确认回调
+    publisher-confirms: true
+    publisher-returns: true
+    virtual-host: /
+
 mybatis:
   #指定全局配置文件的位置
   config-location: classpath:mybatis/mybatis-config.xml
   #指定sql映射文件的位置
   mapper-locations: classpath:mybatis/mapper/*.xml
+
 
 server:
   port: 8080
@@ -22,3 +45,21 @@ swagger:
   name: 第二组
   url: https://www.vbill.cn/
   email: 1830716357@qq.com
+
+
+thread:
+  pool:
+
+---
+spring:
+  profiles: dev
+  redis:
+    host: 49.234.104.184
+    database: 1
+    port: 6379
+
+    pool:
+      max-active: 2000
+      max-idle: 8
+      max-wait: -1
+      min-idle: 2

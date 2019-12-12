@@ -4,8 +4,10 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisCommands;
@@ -20,6 +22,7 @@ import java.util.UUID;
  * @author: 文状
  * @create: 2019-12-09 14:43
  **/
+@Configuration
 public class RedisLock {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;

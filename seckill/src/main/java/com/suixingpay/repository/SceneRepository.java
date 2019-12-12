@@ -38,4 +38,7 @@ public interface SceneRepository {
     int updateUnallocated(int scene_unallocated,int scene_id);
 
     Integer selectEndTime(String sceneEndTime);
+
+
+
 }
