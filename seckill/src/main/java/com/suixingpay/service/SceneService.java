@@ -8,14 +8,17 @@ import com.suixingpay.utils.GenericResponse;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+/**
+ * 孙克强
+ */
 public interface SceneService {
-    //新增活动
+    //新增活动  孙克强
     int insertScene(Scene scene);
 
-    //查询所有活动
+    //查询所有活动  孙克强
     List<Scene> getAllScenes();
 
-    //按id查询活动
+    //按id查询活动  孙克强
     Scene selectById(Integer id);
 
     int selectSceneNumberById(int id);
@@ -23,7 +26,7 @@ public interface SceneService {
     Scene selectSceneByTime(String time);
 
     //记录每次活动未被认领的沉默用户数量
-    int updateUnallocated(int sceneUnallocated,int sceneId);
+    int updateUnallocated(int sceneUnallocated, int sceneId);
 
     /*
      * 张佳鑫
@@ -46,4 +49,8 @@ public interface SceneService {
 
     //根据状态判断活动状态已结束
     List<Scene> judgeStateByTime3()throws Exception;
+
+    //查询当前省份可用的沉默用户数  孙克强
+    int findCountCanUse(String curProvince, String curDate);
+
 }

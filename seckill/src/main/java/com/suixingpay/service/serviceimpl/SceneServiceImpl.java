@@ -196,6 +196,11 @@ public class SceneServiceImpl implements SceneService {
         }
         return scenes1;
     }
+    @Override
+    public int findCountCanUse(String curProvince, String curDate) {
+        return sceneRepository.findCountCanUse(curProvince, curDate);
+    }
+
 }
 
 
