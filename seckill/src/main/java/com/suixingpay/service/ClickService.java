@@ -17,5 +17,5 @@ public interface ClickService {
   Manager Click(Integer managerId);
 
 
-  Callable<GenericResponse> clickRob(Integer sceneId, Integer managerId)throws ParseException;
+  boolean clickRob(Integer sceneId, Integer managerId)throws ParseException;
 }

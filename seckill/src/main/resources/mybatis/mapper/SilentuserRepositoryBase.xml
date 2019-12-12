@@ -463,7 +463,7 @@
         根据user_id将用户改成轮空用户
     -->
     <update id="updateSilentuserIsbyebye" parameterType="com.suixingpay.entity.Silentuser">
-        update `silentuser` set `user_isbyebye`=1 where `user_id`=#{userId}
+        update `silentuser` set `user_isbyebye`=0 where `user_id`=#{userId}
     </update>
 
     <!--

@@ -8,21 +8,23 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 
   rabbitmq:
-      # MQ端口
+    # MQ端口
     host: www.wzdnnn.com
     port: 5672
     username: wz
     password: 123456
+
     listener:
       simple:
-          # 消费者最小数量
+        # 消费者最小数量
         concurrency: 1
-          # 消费者最大数量
+        # 消费者最大数量
         max-concurrency: 10
         # 是否自动确认信息
         acknowledge-mode: auto
         # 并发执行的最大数量
         prefetch: 10
+
       #  消息发送到交换机确认机制,是否确认回调
     publisher-confirms: true
     publisher-returns: true

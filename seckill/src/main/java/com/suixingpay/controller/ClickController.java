@@ -4,7 +4,6 @@ import com.suixingpay.entity.Scene;
 import com.suixingpay.service.ClickService;
 import com.suixingpay.service.ManagerService;
 import com.suixingpay.service.SceneService;
-import com.suixingpay.service.SendService;
 import com.suixingpay.service.serviceimpl.ClickServiceImpl;
 import com.suixingpay.service.serviceimpl.SceneServiceImpl;
 import com.suixingpay.utils.GenericResponse;
@@ -36,8 +35,6 @@ public class ClickController {
     private ManagerService managerService;
     @Autowired
     private SceneService sceneService;
-    @Autowired
-    private SendService sendService;
     @Autowired
     private ClickServiceImpl ClickServiceImpl;
     private volatile int count = 300;
@@ -99,11 +96,13 @@ public class ClickController {
 
             } else if (managerService.selectById(managerId).getManageIsgrab() == 0 && count > 0 && new Date().before(date) && new Date().after(sdf.parse(starttime))) {
                 if (sceneService.selectById(sceneId).getSceneCount() > 0) {
-                    sendService.sendMessage(sceneId, managerId,count);
-                    if (ClickServiceImpl.count>0){
-                         return () -> GenericResponse.success("click666", "秒杀成功");
+                    System.out.println("aoiao");
+                    boolean b = ClickServiceImpl.clickRob(sceneId, managerId);
+                    if (b==true){
+                        return () -> GenericResponse.success("click666", "秒杀成功");
+
                     }else {
-                        return () -> GenericResponse.failed("click999", "用户数量不足");
+                        return () -> GenericResponse.failed("click666", "秒杀失败");
                     }
                 } else {
                     //最开始就没有沉默用户
