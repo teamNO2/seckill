@@ -61,5 +61,5 @@ public interface SilentuserRepository {
      * 张佳鑫
      * 统计用户资源
      */
-    List<Silentuser> selectUserResource();
+    List<Silentuser> selectUserResource(String curTime);
 }

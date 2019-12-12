@@ -327,6 +327,25 @@
     </update>
 
 
+    <!-- 查询当前省份可用的沉默用户数     孙克强-->
+    <select id="findCountCanUse" parameterType="java.lang.String" resultType="int">
+        SELECT (
+                (SELECT COUNT(*) FROM `silentuser` WHERE `user_province` = #{curProvince} AND `manage_id` = 0)
+                 -
+                 (SELECT COUNT(*) FROM `silentuser` WHERE `user_iswhite` = 1 AND `user_province` = #{curProvince})
+                 -
+                (SELECT IFNULL(SUM(`scene_count`),0) FROM `scene` WHERE `scene_province` = #{curProvince} AND `scene_endtime` > #{curDate})
+             ) AS aaa
+    </select>
+
+
+    <!--
+    张佳鑫
+    查询数据库中比当前时间小的最大时间
+    -->
+    <select id="selectEndTime" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select `scene_id` from `scene` where `scene_endtime` &lt; #{sceneEndTime} order by scene_endtime desc limit 1
+    </select>
 
 
 

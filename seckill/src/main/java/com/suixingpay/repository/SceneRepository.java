@@ -9,7 +9,9 @@
 package com.suixingpay.repository;
 
 import com.suixingpay.entity.Scene;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,20 +25,24 @@ import java.util.List;
 @Mapper
 @Repository
 public interface SceneRepository {
-    //新增活动
+    //新增活动  孙克强
     int insertSelective(Scene scene);
 
-    //查询所有活动
+    //查询所有活动  孙克强
     List<Scene>  getAllScenes();
 
-    //按id查询活动
+    //按id查询活动  孙克强
     Scene selectById(String id);
 
 
     //记录每次活动未被认领的沉默用户数量
     int updateUnallocated(int scene_unallocated,int scene_id);
 
+    Integer selectEndTime(String sceneEndTime);
 
 
+
+    //查询当前省份可用的沉默用户数  孙克强
+    int findCountCanUse(String curProvince,String curDate);
 
 }

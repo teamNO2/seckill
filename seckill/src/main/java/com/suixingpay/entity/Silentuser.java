@@ -44,10 +44,14 @@ public class Silentuser{
     private String userTime;
     /** 轮空标记0：不轮空，1：轮空 **/
     private Integer userIsbyebye;
-    /** 省份表 **/
-    private String userProvince;
     /** 沉默用户数量 **/
-    private Integer countIsWhite;
+    private Integer countNotWhite;
+    /** 白名单数量**/
+    private Integer countWhite;
     /** 可参加用户数量 **/
     private Integer countManagerId;
+    /** 省份表 **/
+    private String userProvince;
+
+
 }
