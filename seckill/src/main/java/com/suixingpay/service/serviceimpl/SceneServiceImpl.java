@@ -5,6 +5,7 @@ import com.suixingpay.entity.Silentuser;
 import com.suixingpay.repository.SceneRepository;
 import com.suixingpay.repository.SilentuserRepository;
 import com.suixingpay.service.SceneService;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -128,8 +129,13 @@ public class SceneServiceImpl implements SceneService {
      * 统计用户资源
      */
     @Override
-    public List<Silentuser> selectUserResource() {
-        return silentuserRepository.selectUserResource();
+    public List<Silentuser> selectUserResource(String curTime) {
+        return silentuserRepository.selectUserResource(curTime);
+    }
+
+    @Override
+    public Integer selectEndTime(String sceneEndTime) {
+        return sceneRepository.selectEndTime(sceneEndTime);
     }
 
 }
