@@ -57,5 +57,9 @@ public interface SilentuserRepository {
      */
     Silentuser selectById(String userId);
 
-
+    /*
+     * 张佳鑫
+     * 统计用户资源
+     */
+    List<Silentuser> selectUserResource();
 }

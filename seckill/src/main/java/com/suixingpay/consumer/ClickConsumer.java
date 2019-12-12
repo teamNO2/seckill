@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.Callable;
 
 @Slf4j
@@ -24,20 +25,21 @@ import java.util.concurrent.Callable;
          * 监听用户抢红包信息
          */
         @RabbitListener(queues = "info")
-        public Callable<GenericResponse> onMessage(Message message, Channel channel) throws Exception {
+        public String onMessage(Message message, Channel channel) throws Exception {
             long tag = message.getMessageProperties().getDeliveryTag();
             try {
                 String s = new String(message.getBody(), "UTF-8");
-                char[] chars = s.toCharArray();
-                log.info("监听到抢红包用户：" );
-                System.out.println(Integer.parseInt(String.valueOf(chars[1])));
-                System.out.println(Integer.parseInt(String.valueOf(chars[3])));
+                 s= s.replace("\"", "");
+                 String[] strings = s.split(",");
+                log.info("监听到秒杀用户：" );
+                System.out.println(Integer.parseInt(strings[0]));
+                System.out.println(Integer.parseInt(strings[1]));
                 //执行秒杀业务 0：sceneId  1：manageId
-               clickService.clickRob(Integer.parseInt(String.valueOf(chars[1])),Integer.parseInt(String.valueOf(chars[3])));
+                clickService.clickRob(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]));
 
             } catch (Exception e) {
                 e.printStackTrace();
-                log.error("用户抢红包发生异常：" + e.getMessage());
+                log.error("用户秒杀发生异常：" + e.getMessage());
                 //拒绝接收
 
             }

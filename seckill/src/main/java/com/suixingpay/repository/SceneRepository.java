@@ -36,4 +36,7 @@ public interface SceneRepository {
     //记录每次活动未被认领的沉默用户数量
     int updateUnallocated(int scene_unallocated,int scene_id);
 
+
+
+
 }

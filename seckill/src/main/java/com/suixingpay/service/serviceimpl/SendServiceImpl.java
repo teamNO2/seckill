@@ -14,11 +14,12 @@ public class SendServiceImpl implements SendService {
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    public void sendMessage(int sceneId, int manageId) {
+    public void sendMessage(int sceneId, int manageId,int count) {
         String sceneIdString = String.valueOf(sceneId);
         String manageIdString = String.valueOf(manageId);
+        String countString = String.valueOf(count);
         try {
-            rabbitTemplate.convertAndSend("info", sceneIdString+","+manageIdString);
+            rabbitTemplate.convertAndSend("info", sceneIdString+","+manageIdString+","+countString);
         } catch (AmqpException e) {
             log.error("发送用户抢红包进入消息队列异常："+e.getMessage());
             e.printStackTrace();
