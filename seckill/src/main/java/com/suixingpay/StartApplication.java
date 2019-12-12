@@ -1,5 +1,6 @@
 package com.suixingpay;
 
+import com.suixingpay.consumer.ClickConsumer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,6 +13,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @SpringBootApplication
 public class StartApplication {
     public static void main(String[] args) {
+
         SpringApplication. run(StartApplication.class, args);
     }
     @Bean
@@ -19,4 +21,9 @@ public class StartApplication {
     public ThreadPoolTaskExecutor getThreadPool() {
         return new ThreadPoolTaskExecutor();
     }
+    @Bean
+    public ClickConsumer getClickConsumer(){
+        return new ClickConsumer();
+    }
+
 }

@@ -37,9 +37,9 @@ public class ClickServiceImpl implements ClickService {
     private RedisLock redisLock;
 
     @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
-    private static int count = 0;
+    private static int count = 1000;
     // 锁名
     private static final String ROP_TICKET_LOCK = "tickets:lock";
     // 锁过期时间 30s
@@ -56,7 +56,8 @@ public class ClickServiceImpl implements ClickService {
         return managerService.selectById(managerId);
     }
 
-    public Callable<GenericResponse> clickRob(Integer sceneId, Integer managerId)throws ParseException {
+    public Callable<GenericResponse> clickRob(Integer sceneId, Integer managerId) throws ParseException {
+
         String noting = "今日用户已经被抢完，请留意后续活动";
         String joined = "已经参加活动，请等待结果公布";
         String success = "恭喜您成功参加此次秒杀活动，待活动结束后，去意向客户查看您的用户信息，并请于 3 内完成拓展";
@@ -65,13 +66,13 @@ public class ClickServiceImpl implements ClickService {
         String endPoint = "目前无活动，敬请期待";
         String end = "今天全部活动已经结束";
         String start = "活动还没有开始";
-        int sceneIdIndex = 0;//设置sceneId场次值，默认为0；
+        //设置sceneId场次值，默认为0；
 
         //判断是否为新活动
-        if (sceneIdIndex !=sceneId){
-            sceneIdIndex = sceneId;
-            count = sceneService.selectById(sceneId).getSceneCount();
-        }
+//        if (sceneIdIndex !=sceneId){
+//            sceneIdIndex = sceneId;
+//            count = sceneService.selectById(sceneId).getSceneCount();
+//        }
         //判断当前时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //获取活动的结束时间
@@ -109,8 +110,10 @@ public class ClickServiceImpl implements ClickService {
                 //目前无活动敬请期待
                 return () -> GenericResponse.success("selectById666", "活动结束", endPoint);
             }
+//            && new Date().before(date) && new Date().after(sdf.parse(starttime))
 
-        } else if ((managerService.selectById(managerId).getManageIsgrab() == 0) && count > 0 && new Date().before(date) && new Date().after(sdf.parse(starttime))) {
+        } else if (1==1) {
+            System.out.println("liaoaoaoaooaoaoa");
             //判断鑫管家有没有领到用户，等于0 表示可以抢用户
             if (sceneService.selectById(sceneId).getSceneCount() > 0) {
                 //获取锁
@@ -153,9 +156,9 @@ public class ClickServiceImpl implements ClickService {
 
 
         return null;
-    }
 
     }
+}
 
 
 
