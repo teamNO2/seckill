@@ -20,6 +20,7 @@ import java.util.concurrent.Callable;
 /*
  *@Author 孙克强
  */
+@Slf4j
 @RestController
 @RequestMapping("/scene")
 @Api("秒杀活动配置模块")

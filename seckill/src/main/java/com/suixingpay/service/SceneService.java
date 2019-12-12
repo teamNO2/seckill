@@ -36,7 +36,7 @@ public interface SceneService {
      * 查询每场活动的结束时间
      */
     Integer selectEndTime(String sceneEndTime);
-    List<Silentuser> selectUserResource();
+
 
     //根据状态判断活动状态未开始
     List<Scene> judgeStateByTime1() throws Exception;
