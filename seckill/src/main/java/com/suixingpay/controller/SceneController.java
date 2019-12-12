@@ -218,4 +218,29 @@ public class SceneController {
             return () -> GenericResponse.failed("selectUserResource999", "查询失败");
         }
     }
+
+
+
+
+    /**
+     * @Description: 判定状态
+     * @Param: []
+     * @return: java.util.List<com.suixingpay.entity.Scene>
+     * @Author: lichanghao
+     * @Date: 2019/12/12
+     */
+    @GetMapping("/judgeState1")
+    public List<Scene> judgeStateByTime1()throws Exception{
+        return sceneService.judgeStateByTime1();
+    }
+    @GetMapping("/judgeState2")
+    public List<Scene> judgeStateByTime2()throws Exception{
+        return sceneService.judgeStateByTime2();
+    }
+    @GetMapping("/judgeState3")
+    public List<Scene> judgeStateByTime3()throws Exception{
+        return sceneService.judgeStateByTime3();
+    }
+
+
 }

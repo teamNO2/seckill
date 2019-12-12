@@ -2,8 +2,10 @@ package com.suixingpay.service;
 
 import com.suixingpay.entity.Scene;
 import com.suixingpay.entity.Silentuser;
+import com.suixingpay.utils.GenericResponse;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * 孙克强
@@ -30,6 +32,15 @@ public interface SceneService {
      * 统计用户资源
      */
     List<Silentuser> selectUserResource();
+
+    //根据状态判断活动状态未开始
+    List<Scene> judgeStateByTime1() throws Exception;
+
+    //根据状态判断活动状态正在进行
+    List<Scene> judgeStateByTime2()throws Exception;
+
+    //根据状态判断活动状态已结束
+    List<Scene> judgeStateByTime3()throws Exception;
 
     //查询当前省份可用的沉默用户数  孙克强
     int findCountCanUse(String curProvince, String curDate);

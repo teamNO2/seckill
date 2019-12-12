@@ -5,6 +5,7 @@ import com.suixingpay.entity.Silentuser;
 import com.suixingpay.repository.SceneRepository;
 import com.suixingpay.repository.SilentuserRepository;
 import com.suixingpay.service.SceneService;
+import com.suixingpay.utils.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /*
  *@Author sunkeqiang
@@ -131,9 +134,66 @@ public class SceneServiceImpl implements SceneService {
         return silentuserRepository.selectUserResource();
     }
 
+    /*
+     * 李常昊
+     * 未开始
+     */
+    @Override
+    public List<Scene> judgeStateByTime1() throws Exception {
+        List<Scene> scenes = sceneRepository.getAllScenes();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Scene> scenes1 = new ArrayList<>();
+        for (Scene scene : scenes) {
+            Date startTime = format.parse(scene.getSceneStarttime());
+            if (startTime.after(new Date())) {
+                scenes1.add(scene);
+            }
+        }
+        return scenes1;
+    }
+    /*
+     * 李常昊
+     * 正在进行
+     */
+
+    @Override
+    public List<Scene> judgeStateByTime2() throws Exception {
+        List<Scene> scenes = sceneRepository.getAllScenes();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Scene> scenes1 = new ArrayList<>();
+        for (Scene scene : scenes) {
+            Date startTime = format.parse(scene.getSceneStarttime());
+            Date endTime = format.parse(scene.getSceneEndtime());
+            if (startTime.before(new Date()) && endTime.after(new Date())) {
+                scenes1.add(scene);
+            }
+        }
+        return scenes1;
+    }
+
+    /*
+     * 李常昊
+     * 已结束
+     */
+    @Override
+    public List<Scene> judgeStateByTime3() throws Exception {
+        List<Scene> scenes = sceneRepository.getAllScenes();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Scene> scenes1 = new ArrayList<>();
+        for (Scene scene : scenes) {
+            Date startTime = format.parse(scene.getSceneStarttime());
+            Date endTime = format.parse(scene.getSceneEndtime());
+            if (endTime.before(new Date())) {
+                scenes1.add(scene);
+            }
+        }
+        return scenes1;
+    }
     @Override
     public int findCountCanUse(String curProvince, String curDate) {
         return sceneRepository.findCountCanUse(curProvince, curDate);
     }
 
 }
+
+

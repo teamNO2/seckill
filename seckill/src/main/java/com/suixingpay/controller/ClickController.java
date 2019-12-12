@@ -1,10 +1,15 @@
 package com.suixingpay.controller;
 
 import com.suixingpay.entity.Scene;
+import com.suixingpay.service.ClickService;
 import com.suixingpay.service.ManagerService;
 import com.suixingpay.service.SceneService;
+import com.suixingpay.service.SendService;
+import com.suixingpay.service.serviceimpl.ClickServiceImpl;
+import com.suixingpay.service.serviceimpl.SceneServiceImpl;
 import com.suixingpay.utils.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,38 +36,44 @@ public class ClickController {
     private ManagerService managerService;
     @Autowired
     private SceneService sceneService;
+    @Autowired
+    private SendService sendService;
+    @Autowired
+    private ClickServiceImpl ClickServiceImpl;
+    private static final String noting = "今日用户已经被抢完，请留意后续活动";
+    private static final String joined = "已经参加活动，请等待结果公布";
+    private static final String success = "恭喜您成功参加此次秒杀活动，待活动结束后，去意向客户查看您的用户信息，并请于 3 内完成拓展";
+    private static final String nextscenestart = "下一场活动时间为：";
+    private static final String next = "您的归属地不在下一场活动开放范围内，请期待后续活动";
+    private static final String endPoint = "目前无活动，敬请期待";
+    private static final String end = "今天全部活动已经结束";
+    private static final String start = "活动还没有开始";
+    private static final String without = "没有沉默用户可以被抢购";
+    private static final String different = "您的归属地不在本次活动范围内";
+    private static final String errornull = "没有这次活动";
+    private static final String withoutmanager = "没有这个鑫管家";
 
-    private static int count = -1;
+
 
     @GetMapping("/clickRob/{sceneId}/{managerId}")
-    public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable Integer managerId) throws ParseException {
+    public Callable<GenericResponse> clickRob(@PathVariable("sceneId") Integer sceneId, @PathVariable("managerId") Integer managerId) throws ParseException {
 
-        String noting = "今日用户已经被抢完，请留意后续活动";
-        String joined = "已经参加活动，请等待结果公布";
-        String success = "恭喜您成功参加此次秒杀活动，待活动结束后，去意向客户查看您的用户信息，并请于 3 内完成拓展";
-        String nextscenestart = "下一场活动时间为：";
-        String next = "您的归属地不在下一场活动开放范围内，请期待后续活动";
-        String endPoint = "目前无活动，敬请期待";
-        String end = "今天全部活动已经结束";
-        String start = "活动还没有开始";
-        String without = "没有沉默用户可以被抢购";
-        String different = "您的归属地不在本次活动范围内";
-
-        synchronized (this) {
-            if (count == -1) {
-                count = sceneService.selectById(sceneId).getSceneCount();
-                log.info("总数为" + count);
-            }
-            //判断当前时间
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            //获取活动的结束时间
-            String s = sceneService.selectById(sceneId).getSceneEndtime();
-            //获取活动的开始时间
-            String starttime = sceneService.selectById(sceneId).getSceneStarttime();
-            Date date = null;
-            date = sdf.parse(s);//数据库中的活动结束时间
-
-        if (managerService.selectById(managerId).getManageProvince().equals(sceneService.selectById(sceneId).getSceneProvince())) {
+        //判断当前时间
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //获取活动的结束时间
+        String s = sceneService.selectById(sceneId).getSceneEndtime();
+        //获取活动的开始时间
+        String starttime = sceneService.selectById(sceneId).getSceneStarttime();
+        Date date = null;
+        date = sdf.parse(s);//数据库中的活动结束时间
+        if(sceneService.selectById(sceneId).getSceneId() == null ){
+            return () -> GenericResponse.success("selectById999","没有这次活动",errornull);
+        }
+        if(managerService.selectById(managerId).getManageId() == null){
+            return () -> GenericResponse.success("selectById999","没有这个鑫管家",withoutmanager);
+        }
+        boolean  city = managerService.selectById(managerId).getManageProvince().equals(sceneService.selectById(sceneId).getSceneProvince());
+        if (city) {
             //如果鑫管家和活动城市相同
             //判断活动是否结束  当前时间是否在活动结束时间之后
             if (new Date().after(date)) {
@@ -91,34 +102,32 @@ public class ClickController {
                     return () -> GenericResponse.success("selectById666", "活动结束", endPoint);
                 }
 
-            } else if (managerService.selectById(managerId).getManageIsgrab() == 0 && count > 0 && new Date().before(date) && new Date().after(sdf.parse(starttime))) {
-                    if (sceneService.selectById(sceneId).getSceneCount() > 0) {
-                        //沉默用户大于0 写抢的代码
-                        synchronized (this) {
-                            count--;
-                            if (count < 0) {
-                                return () -> GenericResponse.success("click666", "失败", noting);
-                            }
-                            //更改管家领取用户的状态
-                            managerService.updateManageByManageId(managerId);
-                            log.info(managerId+"已经抢走一个用户，还剩" + count);
-                            return () -> GenericResponse.success("click666", "成功", success);
-                        }
-                    } else {
-                        //最开始就没有沉默用户
-                        return () -> GenericResponse.success("click666", "失败", without);
+            }  else if(new Date().before(sdf.parse(starttime))){
+                //如果现在时间在活动开始时间之前
+                return () -> GenericResponse.success("click", "活动还没有开始", start);
+            } else if (managerService.selectById(managerId).getManageIsgrab() == 0 && ClickServiceImpl.count > 0 && new Date().before(date) && new Date().after(sdf.parse(starttime))) {
+                if (sceneService.selectById(sceneId).getSceneCount() > 0 && new Date().before(date) && new Date().after(sdf.parse(starttime))) {
+                    sendService.sendMessage(sceneId, managerId,ClickServiceImpl.count);
+                    if (ClickServiceImpl.count>0){
+                         return () -> GenericResponse.success("click666", "秒杀成功");
+                    }else {
+                        return () -> GenericResponse.failed("click999", "用户数量不足");
                     }
-            } else if (managerService.selectById(managerId).getManageIsgrab() == 1) {
+                } else {
+                    //最开始就没有沉默用户
+                    return () -> GenericResponse.success("click666", "失败", without);
+                }
+            } else if (managerService.selectById(managerId).getManageIsgrab() == 1&& new Date().before(date) && new Date().after(sdf.parse(starttime))) {
                 //表示==1 鑫管家已经领过一次了，
                 log.info(managerId+"已经参加活动");
                 return () -> GenericResponse.success("click", "已经参加过一次活动", joined);
-            } else {
-                return () -> GenericResponse.success("click", "活动还没有开始", start);
             }
         } else {
             return () ->  GenericResponse.success("click", "归属地不在活动范围内", different);
         }
-        }
+        return () -> GenericResponse.success("selectById999","没有这次活动",errornull);
     }
-}
+    }
+
+
 
